@@ -1135,7 +1135,7 @@
             window._toastTimer = setTimeout(() => {
                 toast.classList.add('hidden');
                 toast.classList.remove('flex');
-            }, 3800);
+            }, 4200);
         };
 
         // 5 Quick Taps on Logo opens Private Owner Dashboard (Works on Mobile & Desktop)
@@ -1165,6 +1165,14 @@
             }
 
             // Update Top Nav Pill Active Styling
+            document.querySelectorAll('.nav-pill').forEach(btn => {
+                if (btn.dataset.nav === pageId) {
+                    btn.className = 'nav-pill px-4 py-2 rounded-xl text-xs font-extrabold bg-emerald-500 text-slate-950 shadow-md transition-all cursor-pointer';
+                } else {
+                    btn.className = 'nav-pill px-4 py-2 rounded-xl text-xs font-extrabold text-slate-600 dark:text-slate-300 hover:bg-slate-200/70 dark:hover:bg-white/10 transition-all cursor-pointer';
+                }
+            });
+
             // Sync URL hash cleanly (safe inside blob: iframes and standard domains)
             try {
                 if (pageId === 'inbox') {
@@ -1413,9 +1421,9 @@
     <!-- FIREBASE CLOUD DATABASE & PRIVATE ADMIN SYNC (ycreatiim)              -->
     <!-- ===================================================================== -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Firebase Configuration for ycreatiim
         const firebaseConfig = {
@@ -1482,7 +1490,7 @@
                 window.renderInboxMessages();
             }, (error) => {
                 console.error("Firestore snapshot error:", error);
-                window.showToast("تأكد من تفعيل Firestore Database في لوحة تحكم Firebase", true);
+                window.showToast("خطأ في الصلاحيات: تأكد من تفعيل Firestore Rules (allow read, write: if true)", true);
             });
         }
 
@@ -1536,7 +1544,8 @@
                 window.showToast("تم إرسال طلبك بنجاح! سيتواصل معك فريق Y Creations قريباً.");
             } catch (error) {
                 console.error("Error saving inquiry:", error);
-                window.showToast("تعذر الحفظ في السحابة، تأكد من تفعيل Firestore و Anonymous Auth.", true);
+                const errCode = error?.code || error?.message || '';
+                window.showToast(`تعذر الحفظ (${errCode}) - تأكد من قواعد Firestore Rules`, true);
             } finally {
                 if (submitBtn) {
                     submitBtn.disabled = false;
