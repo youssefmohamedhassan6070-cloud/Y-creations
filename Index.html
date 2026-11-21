@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Y Creations | Engineering, Cloud Hosting & Custom Software</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        arabic: ['Cairo', 'sans-serif'],
+                        english: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        html[lang="en"] body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.84);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+        .dark .glass-panel {
+            background: rgba(11, 14, 22, 0.82);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .page-view {
+            display: none;
+            animation: pageFadeIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .page-view.active {
+            display: block;
+        }
+        @keyframes pageFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        html[dir="ltr"] .rtl-flip {
+            transform: scaleX(-1);
+        }
+        .mesh-bg {
+            background-image:
+                radial-gradient(at 15% 15%, rgba(16, 185, 129, 0.14) 0px, transparent 48%),
+                radial-gradient(at 85% 20%, rgba(139, 92, 246, 0.15) 0px, transparent 48%),
+                radial-gradient(at 50% 90%, rgba(16, 185, 129, 0.08) 0px, transparent 50%);
+        }
+    </style>
+</head>
+<body class="bg-[#FAF9F6] dark:bg-[#050508] text-slate-900 dark:text-slate-100 mesh-bg min-h-screen">
+
+    <!-- ===================================================================== -->
+    <!-- FLOATING TOP DOCK & SERVICES SELECTOR BAR (END-USER NAVIGATION)       -->
+    <!-- ===================================================================== -->
+    <header class="fixed top-3 inset-x-3 sm:inset-x-6 z-40 max-w-7xl mx-auto">
+        <div class="rounded-3xl glass-panel border border-slate-200/80 dark:border-white/10 shadow-2xl overflow-hidden">
+            <!-- Primary Navigation Bar -->
+            <div class="px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
+                <!-- Brand Identity -->
+                <button type="button" onclick="navigateTo('home')" class="flex items-center gap-3 text-start cursor-pointer group">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-500 to-violet-600 p-0.5 shadow-lg shadow-emerald-500/20">
+                        <div class="w-full h-full rounded-[14px] bg-slate-950 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4l8 9 8-9"/>
+                                <path d="M12 13v7"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="font-black text-base sm:text-lg tracking-tight block leading-none">Y Creations</span>
+                        <span class="text-[10px] font-bold text-emerald-500 tracking-wider uppercase" data-i18n="brandTag">Engineering & Cloud</span>
+                    </div>
+                </button>
+
+                <!-- Desktop Multi-Page Navigation Pills (Zero Admin Links Shown Here) -->
+                <nav class="hidden lg:flex items-center gap-1 bg-slate-100/80 dark:bg-white/5 p-1 rounded-2xl border border-slate-200/70 dark:border-white/5">
+                    <button type="button" onclick="navigateTo('home')" data-nav="home" class="nav-pill px-4 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer" data-i18n="navHome">الرئيسية</button>
+                    <button type="button" onclick="navigateTo('services')" data-nav="services" class="nav-pill px-4 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer" data-i18n="navServices">الخدمات (10)</button>
+                    <button type="button" onclick="navigateTo('hosting')" data-nav="hosting" class="nav-pill px-4 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer" data-i18n="navHosting">الاستضافة والسيرفرات</button>
+                    <button type="button" onclick="navigateTo('about')" data-nav="about" class="nav-pill px-4 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer" data-i18n="navAbout">من نحن</button>
+                    <button type="button" onclick="navigateTo('planner')" data-nav="planner" class="nav-pill px-4 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer" data-i18n="navPlanner">ابدأ مشروعك</button>
+                </nav>
+
+                <!-- Right Controls: Language, Theme, Primary CTA -->
+                <div class="flex items-center gap-2">
+                    <button type="button" id="langToggleBtn" onclick="toggleLanguage()" class="px-3 py-2 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-emerald-500/10 border border-slate-200 dark:border-white/10 text-xs font-black text-slate-700 dark:text-slate-200 transition-all flex items-center gap-1.5 cursor-pointer" title="Switch Language">
+                        <i class="fa-solid fa-globe text-emerald-500"></i>
+                        <span id="langLabel">EN</span>
+                    </button>
+
+                    <button type="button" id="themeToggleBtn" onclick="toggleTheme()" class="w-9 h-9 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-violet-500/10 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-700 dark:text-slate-200 transition-all cursor-pointer" title="تغيير المظهر">
+                        <i id="themeIcon" class="fa-solid fa-sun text-amber-400"></i>
+                    </button>
+
+                    <button type="button" onclick="navigateTo('planner')" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black text-xs transition-all shadow-lg shadow-emerald-500/20 cursor-pointer">
+                        <span data-i18n="navCta">احجز استشارة</span>
+                        <i class="fa-solid fa-arrow-left rtl-flip"></i>
+                    </button>
+
+                    <button type="button" onclick="toggleMobileDrawer()" class="lg:hidden w-9 h-9 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-700 dark:text-slate-200 cursor-pointer">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Interactive Services Quick-Selector Bar (Opens Standalone Service Page) -->
+            <div class="border-t border-slate-200/70 dark:border-white/10 bg-slate-50/70 dark:bg-black/40 px-3 sm:px-6 py-2">
+                <div class="flex items-center gap-2 overflow-x-auto no-scrollbar" id="servicesQuickBar">
+                    <span class="text-[11px] font-extrabold text-slate-400 whitespace-nowrap flex items-center gap-1.5 shrink-0 pl-2">
+                        <i class="fa-solid fa-layer-group text-emerald-500"></i>
+                        <span data-i18n="quickBarLabel">تصفح الخدمات:</span>
+                    </span>
+                    <div id="quickBarPills" class="flex items-center gap-1.5">
+                        <!-- Dynamically populated 10 service buttons -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobileDrawer" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" onclick="toggleMobileDrawer()"></div>
+        <div class="absolute top-4 inset-x-4 rounded-3xl glass-panel p-6 shadow-2xl border border-white/10">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-white/10">
+                <span class="font-black text-lg">Y Creations</span>
+                <button type="button" onclick="toggleMobileDrawer()" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="grid grid-cols-1 gap-2 py-4">
+                <button type="button" onclick="navigateTo('home'); toggleMobileDrawer()" class="text-start px-4 py-3 rounded-xl font-bold hover:bg-emerald-500/10 cursor-pointer" data-i18n="navHome">الرئيسية</button>
+                <button type="button" onclick="navigateTo('services'); toggleMobileDrawer()" class="text-start px-4 py-3 rounded-xl font-bold hover:bg-emerald-500/10 cursor-pointer" data-i18n="navServices">الخدمات (10)</button>
+                <button type="button" onclick="navigateTo('hosting'); toggleMobileDrawer()" class="text-start px-4 py-3 rounded-xl font-bold hover:bg-emerald-500/10 cursor-pointer" data-i18n="navHosting">الاستضافة والسيرفرات</button>
+                <button type="button" onclick="navigateTo('about'); toggleMobileDrawer()" class="text-start px-4 py-3 rounded-xl font-bold hover:bg-emerald-500/10 cursor-pointer" data-i18n="navAbout">من نحن</button>
+                <button type="button" onclick="navigateTo('planner'); toggleMobileDrawer()" class="text-start px-4 py-3 rounded-xl font-bold bg-emerald-500 text-slate-950 cursor-pointer" data-i18n="navPlanner">ابدأ مشروعك الآن</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- MAIN MULTI-PAGE VIEWPORT (Only ONE page is active at any time)        -->
+    <!-- ===================================================================== -->
+    <main class="pt-36 sm:pt-40 pb-16 min-h-screen">
+
+        <!-- ================================================================= -->
+        <!-- PAGE 1: HOME PAGE (Focused Executive Overview + Direct Portals)   -->
+        <!-- ================================================================= -->
+        <section id="page-home" class="page-view active max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Left Hero Content -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-500 text-xs font-extrabold">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                        <span data-i18n="heroBadge">هندسة البرمجيات، التطبيقات، والاستضافة السحابية</span>
+                    </div>
+
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.15] tracking-tight">
+                        <span data-i18n="heroTitle1">نبني البنية الرقمية</span>
+                        <span class="block text-transparent bg-clip-text bg-gradient-to-l from-emerald-400 via-teal-400 to-violet-500" data-i18n="heroTitle2">المتكاملة لنمو أعمالك</span>
+                    </h1>
+
+                    <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl" data-i18n="heroDesc">
+                        في Y Creations نقدم حلولاً هندسية متكاملة تشمل تطوير تطبيقات الهواتف الذكية، الأنظمة البرمجية المخصصة، إنترنت الأشياء، وإدارة السيرفرات السحابية فائقة السرعة بأعلى معايير الأمان والاستقرار.
+                    </p>
+
+                    <div class="flex flex-wrap items-center gap-3 pt-2">
+                        <button type="button" onclick="navigateTo('services')" class="px-6 py-4 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black text-sm transition-all shadow-xl shadow-emerald-500/25 flex items-center gap-2 cursor-pointer">
+                            <span data-i18n="heroBtnServices">استكشف الخدمات العشر</span>
+                            <i class="fa-solid fa-grid-2"></i>
+                        </button>
+                        <button type="button" onclick="navigateTo('hosting')" class="px-6 py-4 rounded-2xl glass-panel border border-violet-500/30 hover:border-violet-500 text-sm font-extrabold transition-all flex items-center gap-2 cursor-pointer">
+                            <i class="fa-solid fa-server text-violet-400"></i>
+                            <span data-i18n="heroBtnHosting">السيرفرات والاستضافة</span>
+                        </button>
+                    </div>
+
+                    <!-- Technical Metrics -->
+                    <div class="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200/70 dark:border-white/10">
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-black text-emerald-500">+240</div>
+                            <div class="text-xs font-bold text-slate-500 dark:text-slate-400 mt-1" data-i18n="metricUptime">مشروع ومنصة رقمية مكتملة</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-black text-violet-400">+8</div>
+                            <div class="text-xs font-bold text-slate-500 dark:text-slate-400 mt-1" data-i18n="metricServices">سنوات من الخبرة الهندسية</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-black text-emerald-500">99.99%</div>
+                            <div class="text-xs font-bold text-slate-500 dark:text-slate-400 mt-1" data-i18n="metricSupport">استقرار السيرفرات ودعم 24/7</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Interactive Portal Cards -->
+                <div class="lg:col-span-5 space-y-4">
+                    <div onclick="openServiceDetail('mobile')" class="group rounded-3xl glass-panel p-6 border border-slate-200 dark:border-white/10 hover:border-emerald-500/50 transition-all cursor-pointer shadow-xl">
+                        <div class="flex items-start justify-between gap-4">
+                            <div class="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-500 flex items-center justify-center text-xl shrink-0">
+                                <i class="fa-solid fa-mobile-screen-button"></i>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-500 text-[11px] font-extrabold">iOS & Android</span>
+                        </div>
+                        <h3 class="text-lg font-black mt-4 group-hover:text-emerald-400 transition-colors" data-i18n="portalMobileTitle">تطوير تطبيقات الموبايل المتكاملة</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed" data-i18n="portalMobileDesc">تطبيقات أصلية وعابرة للمنصات بأداء فائق وتجربة مستخدم سلسة متصلة بالأنظمة السحابية.</p>
+                    </div>
+
+                    <div onclick="navigateTo('hosting')" class="group rounded-3xl glass-panel p-6 border border-slate-200 dark:border-white/10 hover:border-violet-500/50 transition-all cursor-pointer shadow-xl">
+                        <div class="flex items-start justify-between gap-4">
+                            <div class="w-12 h-12 rounded-2xl bg-violet-500/15 text-violet-400 flex items-center justify-center text-xl shrink-0">
+                                <i class="fa-solid fa-server"></i>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-violet-500/10 text-violet-400 text-[11px] font-extrabold">NVMe Cloud & VPS</span>
+                        </div>
+                        <h3 class="text-lg font-black mt-4 group-hover:text-violet-400 transition-colors" data-i18n="portalHostingTitle">الاستضافة السحابية والسيرفرات المخصصة</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed" data-i18n="portalHostingDesc">بنية تحتية معزولة وعالية الأداء مع حماية DDoS، نسخ احتياطي تلقائي، وإدارة DevOps كاملة.</p>
+                    </div>
+
+                    <div onclick="openServiceDetail('custom')" class="group rounded-3xl glass-panel p-6 border border-slate-200 dark:border-white/10 hover:border-emerald-500/50 transition-all cursor-pointer shadow-xl">
+                        <div class="flex items-start justify-between gap-4">
+                            <div class="w-12 h-12 rounded-2xl bg-teal-500/15 text-teal-400 flex items-center justify-center text-xl shrink-0">
+                                <i class="fa-solid fa-microchip"></i>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-teal-500/10 text-teal-400 text-[11px] font-extrabold">Enterprise & IoT</span>
+                        </div>
+                        <h3 class="text-lg font-black mt-4 group-hover:text-teal-400 transition-colors" data-i18n="portalCustomTitle">البرمجيات المخصصة وأنظمة إنترنت الأشياء</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed" data-i18n="portalCustomDesc">منصات ERP/CRM مصممة لعملياتك مع تكامل كامل مع الحساسات والأجهزة الذكية.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- PAGE 2: ALL 10 SERVICES DIRECTORY PAGE                            -->
+        <!-- ================================================================= -->
+        <section id="page-services" class="page-view max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mb-10">
+                <span class="inline-block px-3.5 py-1 rounded-full bg-emerald-500/10 text-emerald-500 text-xs font-extrabold mb-3" data-i18n="servicesDirBadge">دليل الخدمات الهندسية</span>
+                <h1 class="text-3xl sm:text-5xl font-black mb-3" data-i18n="servicesDirTitle">منظومة خدمات Y Creations المتكاملة</h1>
+                <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base" data-i18n="servicesDirDesc">اختر أي خدمة لاستعراض صفحتها المستقلة بالكامل بما تشمله من مخرجات هندسية، تقنيات مستخدمة، ومراحل التنفيذ.</p>
+            </div>
+
+            <div id="allServicesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Populated dynamically with all 10 services -->
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- PAGE 3: STANDALONE SERVICE DETAIL PAGE (Dynamic per Service)      -->
+        <!-- ================================================================= -->
+        <section id="page-service-detail" class="page-view max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div id="serviceDetailContainer">
+                <!-- Dynamically rendered when user clicks any of the 10 services -->
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- PAGE 4: DEDICATED CLOUD HOSTING & SERVERS PAGE                    -->
+        <!-- ================================================================= -->
+        <section id="page-hosting" class="page-view max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
+                <div class="max-w-3xl">
+                    <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-violet-500/10 text-violet-400 text-xs font-extrabold mb-3">
+                        <i class="fa-solid fa-server"></i>
+                        <span data-i18n="hostingBadge">البنية التحتية والسحابة</span>
+                    </span>
+                    <h1 class="text-3xl sm:text-5xl font-black mb-3" data-i18n="hostingTitle">الاستضافة السحابية والسيرفرات المخصصة</h1>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base" data-i18n="hostingDesc">نوفر بيئات استضافة عالية الاعتمادية مصممة للمنصات الحيوية والتطبيقات كثيفة الزيارات مع إدارة تقنية شاملة دون أي تعقيدات تشغيلية.</p>
+                </div>
+                <button type="button" onclick="requestServiceInPlanner('Cloud Hosting & Dedicated Servers')" class="px-6 py-3.5 rounded-2xl bg-violet-600 hover:bg-violet-700 text-white font-black text-xs transition-all shadow-lg shadow-violet-600/25 cursor-pointer self-start lg:self-auto">
+                    <span data-i18n="hostingCta">اطلب استشارة بنية تحتية</span>
+                </button>
+            </div>
+
+            <!-- 4 Server Tiers / Architectures (No Pricing) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                <div class="rounded-3xl glass-panel p-7 border border-slate-200 dark:border-white/10">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-500 flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-cloud"></i></div>
+                    <h3 class="text-xl font-black mb-2" data-i18n="srvTier1Title">Managed Cloud Hosting</h3>
+                    <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4" data-i18n="srvTier1Desc">استضافة سحابية مُدارة بالكامل للمواقع والمنصات التجارية مع توسع تلقائي للموارد وشهادات SSL مجانية.</p>
+                    <ul class="space-y-2 text-xs font-bold text-slate-700 dark:text-slate-300">
+                        <li><i class="fa-solid fa-check text-emerald-500 me-2"></i><span data-i18n="srvTier1F1">تخزين NVMe SSD فائق السرعة</span></li>
+                        <li><i class="fa-solid fa-check text-emerald-500 me-2"></i><span data-i18n="srvTier1F2">شبكة توزيع محتوى عالمية CDN و Caching متقدم</span></li>
+                        <li><i class="fa-solid fa-check text-emerald-500 me-2"></i><span data-i18n="srvTier1F3">نسخ احتياطي يومي آلي خارج السيرفر</span></li>
+                    </ul>
+                </div>
+
+                <div class="rounded-3xl glass-panel p-7 border border-slate-200 dark:border-white/10">
+                    <div class="w-12 h-12 rounded-2xl bg-violet-500/15 text-violet-400 flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-cubes"></i></div>
+                    <h3 class="text-xl font-black mb-2" data-i18n="srvTier2Title">High-Performance Cloud VPS</h3>
+                    <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4" data-i18n="srvTier2Desc">خوادم افتراضية معزولة الموارد مخصصة لتشغيل تطبيقات الموبايل والواجهات البرمجية APIs وقواعد البيانات الضخمة.</p>
+                    <ul class="space-y-2 text-xs font-bold text-slate-700 dark:text-slate-300">
+                        <li><i class="fa-solid fa-check text-violet-400 me-2"></i><span data-i18n="srvTier2F1">معالجات مخصصة Dedicated vCPU وذاكرة ECC</span></li>
+                        <li><i class="fa-solid fa-check text-violet-400 me-2"></i><span data-i18n="srvTier2F2">صلاحيات تحكم كاملة مع مراقبة الأداء لحظياً</span></li>
+                        <li><i class="fa-solid fa-check text-violet-400 me-2"></i><span data-i18n="srvTier2F3">جدار حماية متقدم WAF وحماية من هجمات DDoS</span></li>
+                    </ul>
+                </div>
+
+                <div class="rounded-3xl glass-panel p-7 border border-slate-200 dark:border-white/10">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-500/15 text-amber-400 flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-hard-drive"></i></div>
+                    <h3 class="text-xl font-black mb-2" data-i18n="srvTier3Title">Dedicated Bare-Metal Servers</h3>
+                    <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4" data-i18n="srvTier3Desc">خوادم فيزيائية مستقلة بالكامل للمؤسسات الكبرى والأنظمة المالية التي تتطلب أقصى درجات العزل والأمان.</p>
+                    <ul class="space-y-2 text-xs font-bold text-slate-700 dark:text-slate-300">
+                        <li><i class="fa-solid fa-check text-amber-400 me-2"></i><span data-i18n="srvTier3F1">عتاد مخصص 100% دون مشاركة مع أي عميل آخر</span></li>
+                        <li><i class="fa-solid fa-check text-amber-400 me-2"></i><span data-i18n="srvTier3F2">مصفوفات تخزين RAID للأمان واستمرارية البيانات</span></li>
+                        <li><i class="fa-solid fa-check text-amber-400 me-2"></i><span data-i18n="srvTier3F3">اتصال شبكي فائق السرعة 10Gbps Uplink</span></li>
+                    </ul>
+                </div>
+
+                <div class="rounded-3xl glass-panel p-7 border border-slate-200 dark:border-white/10">
+                    <div class="w-12 h-12 rounded-2xl bg-sky-500/15 text-sky-400 flex items-center justify-center text-xl mb-4"><i class="fa-solid fa-gears"></i></div>
+                    <h3 class="text-xl font-black mb-2" data-i18n="srvTier4Title">DevOps, CI/CD & Server Migration</h3>
+                    <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4" data-i18n="srvTier4Desc">أتمتة النشر البرمجي ونقل قواعد البيانات والمواقع من استضافتك القديمة إلى بنيتنا السحابية دون توقف الخدمة.</p>
+                    <ul class="space-y-2 text-xs font-bold text-slate-700 dark:text-slate-300">
+                        <li><i class="fa-solid fa-check text-sky-400 me-2"></i><span data-i18n="srvTier4F1">نقل مجاني وآمن Zero-Downtime Migration</span></li>
+                        <li><i class="fa-solid fa-check text-sky-400 me-2"></i><span data-i18n="srvTier4F2">حاويات Docker و Kubernetes للتوسع المرن</span></li>
+                        <li><i class="fa-solid fa-check text-sky-400 me-2"></i><span data-i18n="srvTier4F3">تنبيهات فورية واستجابة هندسية على مدار الساعة</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- PAGE 5: ABOUT Y CREATIONS PAGE                                    -->
+        <!-- ================================================================= -->
+        <section id="page-about" class="page-view max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="rounded-3xl glass-panel p-8 sm:p-12 border border-slate-200 dark:border-white/10 mb-8 shadow-2xl">
+                <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
+                    <span class="inline-block px-3.5 py-1 rounded-full bg-emerald-500/10 text-emerald-500 text-xs font-extrabold" data-i18n="aboutBadge">عن الشركة ومسيرتنا الهندسية</span>
+                    <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-violet-500/10 text-violet-400 text-xs font-extrabold">
+                        <i class="fa-solid fa-award"></i>
+                        <span data-i18n="aboutExpBadge">أكثر من 8 سنوات من التميز البرمجي والسحابي</span>
+                    </span>
+                </div>
+
+                <h1 class="text-3xl sm:text-5xl font-black mb-5 leading-tight" data-i18n="aboutTitle">بيت خبرة هندسي متكامل يبني أنظمة رقمية تصنع الفارق وتدوم لسنوات</h1>
+                
+                <div class="space-y-4 text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed max-w-4xl">
+                    <p data-i18n="aboutDesc">
+                        منذ انطلاقتنا، وضعت Y Creations معياراً هندسياً رفيعاً في صناعة البرمجيات وإدارة البنية التحتية السحابية. على مدار سنوات طويلة من العمل المتواصل، نجحنا في تسليم وتشغيل أكثر من 240 مشروعاً برمجياً وسحابياً متكاملاً لعملائنا في مصر والوطن العربي والأسواق العالمية، بدءاً من الشركات الناشئة الطموحة وصولاً إلى المؤسسات الكبرى ذات العمليات التشغيلية المعقدة.
+                    </p>
+                    <p data-i18n="aboutDesc2">
+                        نحن لا نكتفي بكتابة الأكواد البرمجية فحسب، بل نصمم منظومات تقنية شاملة تبدأ من تحليل دورة العمل وهندسة قواعد البيانات عالية التحمل، مروراً بتطوير تطبيقات الهواتف الذكية والأنظمة الإدارية المخصصة، وصولاً إلى استضافة وإدارة السيرفرات المخصصة لضمان سرعة فائقة واستمرارية عمل بنسبة 99.99% على مدار الساعة.
+                    </p>
+                </div>
+
+                <!-- Company Track Record & Project Volume Stats -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-8 pt-8 border-t border-slate-200/70 dark:border-white/10">
+                    <div class="p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-center">
+                        <div class="text-3xl sm:text-4xl font-black text-emerald-500">+240</div>
+                        <div class="text-xs font-extrabold mt-1.5" data-i18n="aboutStat1">مشروع برمجي ومنصة مُسلّمة</div>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-violet-500/10 border border-violet-500/20 text-center">
+                        <div class="text-3xl sm:text-4xl font-black text-violet-400">+110</div>
+                        <div class="text-xs font-extrabold mt-1.5" data-i18n="aboutStat2">تطبيق موبايل iOS و Android</div>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-center">
+                        <div class="text-3xl sm:text-4xl font-black text-emerald-500">+85</div>
+                        <div class="text-xs font-extrabold mt-1.5" data-i18n="aboutStat3">سيرفر سحابي وبنية تحتية مُدارة</div>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-violet-500/10 border border-violet-500/20 text-center">
+                        <div class="text-3xl sm:text-4xl font-black text-violet-400">+15</div>
+                        <div class="text-xs font-extrabold mt-1.5" data-i18n="aboutStat4">قطاعاً تجارياً وصناعياً مخدوماً</div>
+                    </div>
+                </div>
+
+                <!-- Sectors & Solutions Volume Showcase (No specific project or people names) -->
+                <div class="mt-10 pt-8 border-t border-slate-200/70 dark:border-white/10">
+                    <h2 class="text-xl sm:text-2xl font-black mb-2" data-i18n="sectorsTitle">سجل حافل بالحلول والأنظمة المنفذة في مختلف القطاعات</h2>
+                    <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mb-6" data-i18n="sectorsDesc">خبرتنا التراكمية مكنتنا من بناء عشرات الأنظمة المتخصصة التي تعمل بكفاءة عالية يومياً:</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="p-5 rounded-2xl bg-slate-100/80 dark:bg-white/5 border border-slate-200/70 dark:border-white/10">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-emerald-500 font-black text-sm"><i class="fa-solid fa-building-columns me-2"></i><span data-i18n="sec1Title">الأنظمة المالية والتجارية</span></span>
+                                <span class="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-500">+45 Systems</span>
+                            </div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed" data-i18n="sec1Desc">منصات إدارة الموارد المؤسسية ERP، أنظمة نقاط البيع السحابية، وبوابات الدفع والتحصيل الآلي.</p>
+                        </div>
+
+                        <div class="p-5 rounded-2xl bg-slate-100/80 dark:bg-white/5 border border-slate-200/70 dark:border-white/10">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-violet-400 font-black text-sm"><i class="fa-solid fa-truck-fast me-2"></i><span data-i18n="sec2Title">التجارة الإلكترونية واللوجستيات</span></span>
+                                <span class="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-violet-500/15 text-violet-400">+65 Platforms</span>
+                            </div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed" data-i18n="sec2Desc">متاجر إلكترونية متعددة البائعين، تطبيقات توصيل الطلبات والتتبع اللحظي GPS، وإدارة المستودعات.</p>
+                        </div>
+
+                        <div class="p-5 rounded-2xl bg-slate-100/80 dark:bg-white/5 border border-slate-200/70 dark:border-white/10">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-emerald-500 font-black text-sm"><i class="fa-solid fa-heart-pulse me-2"></i><span data-i18n="sec3Title">الرعاية الصحية والعيادات الذكية</span></span>
+                                <span class="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-500">+30 Solutions</span>
+                            </div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed" data-i18n="sec3Desc">منصات حجز المواعيد الطبية، السجلات الصحية الإلكترونية، وتطبيقات الاستشارات الطبية عن بُعد.</p>
+                        </div>
+
+                        <div class="p-5 rounded-2xl bg-slate-100/80 dark:bg-white/5 border border-slate-200/70 dark:border-white/10">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-violet-400 font-black text-sm"><i class="fa-solid fa-graduation-cap me-2"></i><span data-i18n="sec4Title">المنصات التعليمية والتدريب</span></span>
+                                <span class="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-violet-500/15 text-violet-400">+40 Portals</span>
+                            </div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed" data-i18n="sec4Desc">أنظمة إدارة التعلم LMS، منصات البث المباشر المحمية، والاختبارات التفاعلية المدعومة بالذكاء الاصطناعي.</p>
+                        </div>
+
+                        <div class="p-5 rounded-2xl bg-slate-100/80 dark:bg-white/5 border border-slate-200/70 dark:border-white/10">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-emerald-500 font-black text-sm"><i class="fa-solid fa-industry me-2"></i><span data-i18n="sec5Title">الصناعة وإنترنت الأشياء IoT</span></span>
+                                <span class="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-500">+25 Deployments</span>
+                            </div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed" data-i18n="sec5Desc">أنظمة مراقبة خطوط الإنتاج والحساسات الذكية ولوحات التحكم الصناعية الفورية.</p>
+                        </div>
+
+                        <div class="p-5 rounded-2xl bg-slate-100/80 dark:bg-white/5 border border-slate-200/70 dark:border-white/10">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-violet-400 font-black text-sm"><i class="fa-solid fa-server me-2"></i><span data-i18n="sec6Title">البنية التحتية والسيرفرات المدارة</span></span>
+                                <span class="text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-violet-500/15 text-violet-400">+85 Clusters</span>
+                            </div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed" data-i18n="sec6Desc">تجهيز وإدارة السيرفرات السحابية عالية التوافر للمواقع والتطبيقات ذات الزيارات المليونية.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Core Values -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10 pt-8 border-t border-slate-200/70 dark:border-white/10">
+                    <div class="p-6 rounded-2xl bg-slate-100/80 dark:bg-white/5 border border-slate-200/70 dark:border-white/10">
+                        <i class="fa-solid fa-compass-drafting text-2xl text-emerald-500 mb-3"></i>
+                        <h3 class="font-black text-base mb-1.5" data-i18n="val1Title">هندسة قابلة للتوسع</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed" data-i18n="val1Desc">نبني قواعد بيانات وهياكل برمجية نظيفة تتحمل نمو المستخدمين والبيانات دون الحاجة لإعادة البناء.</p>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-slate-100/80 dark:bg-white/5 border border-slate-200/70 dark:border-white/10">
+                        <i class="fa-solid fa-shield-halved text-2xl text-violet-400 mb-3"></i>
+                        <h3 class="font-black text-base mb-1.5" data-i18n="val2Title">أمان واعتمادية أولاً</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed" data-i18n="val2Desc">تطبيق معايير التشفير الحديثة وحماية الخوادم في كل مرحلة من مراحل التطوير والاستضافة.</p>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-slate-100/80 dark:bg-white/5 border border-slate-200/70 dark:border-white/10">
+                        <i class="fa-solid fa-handshake-angle text-2xl text-emerald-500 mb-3"></i>
+                        <h3 class="font-black text-base mb-1.5" data-i18n="val3Title">شراكة تقنية مستمرة</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed" data-i18n="val3Desc">لا ينتهي دورنا عند الإطلاق؛ بل نستمر في المراقبة، الصيانة، وتطوير المزايا الجديدة.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- PAGE 6: PROJECT PLANNER & INQUIRY FORM (Saves to Firebase)        -->
+        <!-- ================================================================= -->
+        <section id="page-planner" class="page-view max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Form Card -->
+                <div class="lg:col-span-7 rounded-3xl glass-panel p-6 sm:p-10 border border-slate-200 dark:border-white/10 shadow-2xl">
+                    <span class="inline-block px-3.5 py-1 rounded-full bg-emerald-500/10 text-emerald-500 text-xs font-extrabold mb-3" data-i18n="plannerBadge">ابدأ مشروعك</span>
+                    <h1 class="text-2xl sm:text-4xl font-black mb-2" data-i18n="plannerTitle">أرسل تفاصيل مشروعك لفريقنا</h1>
+                    <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mb-6" data-i18n="plannerDesc">حدد الخدمات المطلوبة وأدخل بيانات التواصل وسيقوم فريقنا الهندسي بدراسة طلبك والتواصل معك.</p>
+
+                    <form onsubmit="submitProjectInquiry(event)" class="space-y-5">
+                        <!-- Selectable Services Pills -->
+                        <div>
+                            <label class="block text-xs font-extrabold mb-2.5" data-i18n="plannerSelectServices">اختر الخدمات المطلوبة (يمكن اختيار أكثر من خدمة):</label>
+                            <div id="plannerServicesCheckboxes" class="flex flex-wrap gap-2">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-extrabold mb-1.5" data-i18n="labelName">الاسم الكامل *</label>
+                                <input type="text" id="clientNameInput" required class="w-full px-4 py-3 rounded-2xl bg-slate-100/80 dark:bg-white/5 border border-slate-200 dark:border-white/10 focus:border-emerald-500 focus:outline-none text-sm" placeholder="مثال: أحمد محمود">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-extrabold mb-1.5" data-i18n="labelPhone">رقم الهاتف / واتساب *</label>
+                                <input type="tel" id="clientPhoneInput" required dir="ltr" class="w-full px-4 py-3 rounded-2xl bg-slate-100/80 dark:bg-white/5 border border-slate-200 dark:border-white/10 focus:border-emerald-500 focus:outline-none text-sm text-start" placeholder="+20 100 000 0000">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-extrabold mb-1.5" data-i18n="labelEmail">البريد الإلكتروني (اختياري)</label>
+                            <input type="email" id="clientEmailInput" dir="ltr" class="w-full px-4 py-3 rounded-2xl bg-slate-100/80 dark:bg-white/5 border border-slate-200 dark:border-white/10 focus:border-emerald-500 focus:outline-none text-sm text-start" placeholder="name@company.com">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-extrabold mb-1.5" data-i18n="labelNotes">تفاصيل المشروع أو المتطلبات التقنية</label>
+                            <textarea id="clientNotesInput" rows="4" class="w-full px-4 py-3 rounded-2xl bg-slate-100/80 dark:bg-white/5 border border-slate-200 dark:border-white/10 focus:border-emerald-500 focus:outline-none text-sm" placeholder="اشرح باختصار فكرة المشروع، المنصات المستهدفة، أو مواصفات السيرفر المطلوب..."></textarea>
+                        </div>
+
+                        <button type="submit" id="plannerSubmitBtn" class="w-full py-4 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black text-sm transition-all shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-2 cursor-pointer">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span data-i18n="btnSendRequest">إرسال الطلب الآن</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Side Contact Info -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="rounded-3xl glass-panel p-8 border border-slate-200 dark:border-white/10">
+                        <h3 class="text-xl font-black mb-5 flex items-center gap-2">
+                            <i class="fa-solid fa-shield-halved text-emerald-500"></i>
+                            <span data-i18n="contactDirectTitle">قنوات التواصل الهندسية</span>
+                        </h3>
+                        <div class="space-y-4 text-sm">
+                            <div class="flex items-center gap-3 p-3.5 rounded-2xl bg-slate-100/80 dark:bg-white/5">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-500/15 text-emerald-500 flex items-center justify-center"><i class="fa-solid fa-location-dot"></i></div>
+                                <div>
+                                    <div class="text-xs text-slate-400" data-i18n="contactLocLabel">المقر الرئيسي</div>
+                                    <div class="font-bold" data-i18n="contactLocVal">الدقي، القاهرة، جمهورية مصر العربية</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 p-3.5 rounded-2xl bg-slate-100/80 dark:bg-white/5">
+                                <div class="w-10 h-10 rounded-xl bg-violet-500/15 text-violet-400 flex items-center justify-center"><i class="fa-solid fa-envelope"></i></div>
+                                <div>
+                                    <div class="text-xs text-slate-400" data-i18n="contactMailLabel">البريد الرسمي</div>
+                                    <a href="mailto:ycreationforprogramming@gmail.com" class="font-bold font-mono text-xs sms:text-sm hover:text-emerald-400 transition-colors" dir="ltr">ycreationforprogramming@gmail.com</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rounded-3xl glass-panel p-8 border border-slate-200 dark:border-white/10">
+                        <h4 class="font-black text-base mb-3" data-i18n="nextStepsTitle">ماذا يحدث بعد إرسال طلبك؟</h4>
+                        <ol class="space-y-3 text-xs text-slate-500 dark:text-slate-400">
+                            <li class="flex items-start gap-2.5"><span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-500 font-black flex items-center justify-center shrink-0">1</span><span data-i18n="step1Text">يصل طلبك فوراً إلى فريقنا الهندسي عبر السحابة.</span></li>
+                            <li class="flex items-start gap-2.5"><span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-500 font-black flex items-center justify-center shrink-0">2</span><span data-i18n="step2Text">نراجع المتطلبات التقنية ونحدد البنية الأنسب لمشروعك.</span></li>
+                            <li class="flex items-start gap-2.5"><span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-500 font-black flex items-center justify-center shrink-0">3</span><span data-i18n="step3Text">نتواصل معك لتحديد خطة التنفيذ والجدول الزمني.</span></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===================================================================== -->
+    <!-- GLOBAL FOOTER (Appears at the bottom of EVERY page)                   -->
+    <!-- ===================================================================== -->
+    <footer class="border-t border-slate-200/80 dark:border-white/10 glass-panel py-6 px-4 sm:px-6 lg:px-8 mt-auto">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+            <div class="flex items-center gap-3">
+                <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-emerald-500 to-violet-600 flex items-center justify-center text-slate-950 font-black text-xs">Y</div>
+                <span class="font-bold text-slate-600 dark:text-slate-300" data-i18n="footerTagline">هندسة البرمجيات، التطبيقات، والاستضافة السحابية المتكاملة</span>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-4">
+                <a href="mailto:ycreationforprogramming@gmail.com" dir="ltr" class="font-mono font-bold text-slate-500 dark:text-slate-400 hover:text-emerald-500 transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-envelope text-emerald-500"></i>
+                    <span>ycreationforprogramming@gmail.com</span>
+                </a>
+                <span class="hidden sm:inline text-slate-400">•</span>
+                <div class="font-black tracking-wide text-slate-800 dark:text-white flex items-center gap-1.5">
+                    <span class="text-slate-400 font-semibold">Powered by</span>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-violet-500 font-black">Y Creations</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Change Admin Password Modal -->
+    <div id="changePinModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/75 backdrop-blur-sm" onclick="closeChangePinModal()"></div>
+        <div class="relative w-full max-w-md rounded-3xl glass-panel p-6 sm:p-8 border border-slate-200 dark:border-white/15 shadow-2xl">
+            <h3 class="text-lg font-black mb-1" data-i18n="changePinTitle">تغيير كلمة مرور المالك</h3>
+            <p class="text-xs text-slate-400 mb-5" data-i18n="changePinDesc">أدخل كلمة المرور الحالية ثم كلمة المرور الجديدة لحفظها بأمان في سحابة حسابك.</p>
+            <form onsubmit="saveNewAdminPin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-extrabold mb-1.5" data-i18n="currentPassLabel">كلمة المرور الحالية *</label>
+                    <input type="password" id="currentPinInput" required class="w-full px-4 py-3 rounded-xl bg-slate-100/80 dark:bg-white/5 border border-slate-200 dark:border-white/10 font-mono text-sm focus:border-emerald-500 focus:outline-none" placeholder="••••••••">
+                </div>
+                <div>
+                    <label class="block text-xs font-extrabold mb-1.5" data-i18n="newPassLabel">كلمة المرور الجديدة (6 أحرف على الأقل) *</label>
+                    <div class="relative">
+                        <input type="password" id="newPinInput" minlength="6" maxlength="32" required class="w-full px-4 py-3 rounded-xl bg-slate-100/80 dark:bg-white/5 border border-slate-200 dark:border-white/10 font-mono text-sm focus:border-emerald-500 focus:outline-none" placeholder="••••••••">
+                        <button type="button" onclick="togglePasswordVisibility('newPinInput', 'newPassEyeIcon')" class="absolute top-1/2 -translate-y-1/2 end-3.5 text-slate-400 hover:text-emerald-400 cursor-pointer">
+                            <i id="newPassEyeIcon" class="fa-solid fa-eye text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-extrabold mb-1.5" data-i18n="confirmPassLabel">تأكيد كلمة المرور الجديدة *</label>
+                    <input type="password" id="confirmPinInput" minlength="6" maxlength="32" required class="w-full px-4 py-3 rounded-xl bg-slate-100/80 dark:bg-white/5 border border-slate-200 dark:border-white/10 font-mono text-sm focus:border-emerald-500 focus:outline-none" placeholder="••••••••">
+                </div>
+                <p id="changePassError" class="hidden text-xs font-bold text-rose-500"></p>
+                <div class="flex gap-2 pt-2">
+                    <button type="submit" class="flex-1 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black text-xs cursor-pointer" data-i18n="savePinBtn">حفظ كلمة المرور</button>
+                    <button type="button" onclick="closeChangePinModal()" class="px-5 py-3 rounded-xl bg-slate-200 dark:bg-white/10 font-bold text-xs cursor-pointer" data-i18n="cancelBtn">إلغاء</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Custom Toast Notification (No alert() used) -->
+    <div id="toastNotification" class="fixed bottom-6 start-1/2 -translate-x-1/2 z-50 hidden items-center gap-3 px-5 py-3.5 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-950 shadow-2xl border border-emerald-500/30 text-xs font-extrabold">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-500 text-base"></i>
+        <span id="toastText">تم بنجاح</span>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- APPLICATION DATA, ROUTING & BILINGUAL ENGINE (UI SCRIPT)              -->
+    <!-- ===================================================================== -->
+    <script>
+        let currentLang = 'ar';
+        let activePage = 'home';
+        let activeServiceId = null;
+        window.selectedPlannerServices = new Set();
+
+        const servicesCatalog = [
+            {
+                id: 'mobile',
+                icon: 'fa-mobile-screen-button',
+                color: 'emerald',
+                badge: 'iOS & Android',
+                titleAr: 'تطوير تطبيقات الموبايل',
+                titleEn: 'Mobile App Development',
+                shortAr: 'بناء تطبيقات iOS و Android أصلية وعابرة للمنصات بأداء فائق وتجربة مستخدم سلسة.',
+                shortEn: 'Building native and cross-platform iOS & Android apps with high performance and seamless UX.',
+                deliverablesAr: ['تطبيقات iOS و Android متوافقة مع كافة الشاشات', 'لوحة تحكم إدارية سحابية متكاملة', 'ربط بوابات الدفع الإلكتروني والإشعارات الفورية', 'نشر التطبيقات على App Store و Google Play'],
+                deliverablesEn: ['Native/Cross-platform iOS & Android apps', 'Full cloud admin dashboard', 'Payment gateways & real-time push notifications', 'App Store & Google Play deployment'],
+                stack: ['Flutter', 'React Native', 'Swift', 'Kotlin', 'Firebase', 'REST & GraphQL'],
+                timelineAr: '4 إلى 8 أسابيع حسب نطاق المزايا',
+                timelineEn: '4 to 8 Weeks depending on feature scope'
+            },
+            {
+                id: 'custom',
+                icon: 'fa-code-branch',
+                color: 'violet',
+                badge: 'Enterprise Systems',
+                titleAr: 'البرمجيات والأنظمة المخصصة',
+                titleEn: 'Custom Software Development',
+                shortAr: 'تصميم وتطوير أنظمة ERP و CRM ومنصات تشغيل مصممة خصيصاً لدورة عمل شركتك.',
+                shortEn: 'Architecting tailored ERP, CRM, and operational platforms engineered around your business workflow.',
+                deliverablesAr: ['تحليل وهندسة قواعد البيانات عالية الأداء', 'نظام صلاحيات متعدد المستويات للموظفين', 'تقارير تحليلية لحظية وتصدير البيانات', 'ربط برمجي APIs مع الأنظمة الخارجية'],
+                deliverablesEn: ['High-performance database architecture', 'Multi-tier role-based access control', 'Real-time analytics & automated reporting', 'Custom API integrations with third-party tools'],
+                stack: ['Node.js', 'Python', 'TypeScript', 'PostgreSQL', 'Redis', 'Docker'],
+                timelineAr: '6 إلى 12 أسبوعاً',
+                timelineEn: '6 to 12 Weeks'
+            },
+            {
+                id: 'hosting',
+                icon: 'fa-server',
+                color: 'emerald',
+                badge: 'Cloud & Servers',
+                titleAr: 'الاستضافة السحابية والسيرفرات',
+                titleEn: 'Cloud Hosting & Servers',
+                shortAr: 'إدارة وتشغيل سيرفرات Cloud VPS و Dedicated مع حماية متقدمة وضمان استقرار 99.99%.',
+                shortEn: 'Managed Cloud VPS & Dedicated servers with DDoS protection and 99.99% uptime SLA.',
+                deliverablesAr: ['إعداد وتهيئة سيرفرات NVMe عالية السرعة', 'حماية WAF وجدران نارية ضد الهجمات', 'نسخ احتياطي يومي آلي واستعادة فورية', 'مراقبة على مدار الساعة وتحسين زمن الاستجابة'],
+                deliverablesEn: ['High-speed NVMe server provisioning', 'WAF & advanced DDoS mitigation', 'Automated daily off-site backups', '24/7 uptime monitoring & latency optimization'],
+                stack: ['Linux Ubuntu/Alma', 'Nginx', 'Docker', 'AWS / DigitalOcean', 'Cloudflare', 'Kubernetes'],
+                timelineAr: '24 إلى 72 ساعة للتجهيز والنقل الكامل',
+                timelineEn: '24 to 72 Hours for full setup & migration'
+            },
+            {
+                id: 'web',
+                icon: 'fa-globe',
+                color: 'violet',
+                badge: 'Web Platforms',
+                titleAr: 'تطوير المواقع والمنصات الرقمية',
+                titleEn: 'Web Applications & Portals',
+                shortAr: 'مواقع مؤسسية ومنصات ويب تفاعلية فائقة السرعة متوافقة مع محركات البحث SEO.',
+                shortEn: 'Ultra-fast corporate websites and interactive web portals engineered for SEO and conversion.',
+                deliverablesAr: ['تصميم متجاوب بالكامل مع الهواتف والأجهزة اللوحية', 'بنية برمجية سريعة التحميل ومحسنة لمحركات البحث', 'نظام إدارة محتوى مرن وسهل الاستخدام', 'شهادات أمان SSL وحماية البيانات'],
+                deliverablesEn: ['100% responsive mobile-first architecture', 'SEO-optimized fast-loading frontend', 'Flexible content management system', 'SSL encryption & security hardening'],
+                stack: ['Next.js', 'React', 'Tailwind CSS', 'TypeScript', 'Node.js'],
+                timelineAr: '2 إلى 5 أسابيع',
+                timelineEn: '2 to 5 Weeks'
+            },
+            {
+                id: 'ecommerce',
+                icon: 'fa-cart-shopping',
+                color: 'emerald',
+                badge: 'E-Commerce',
+                titleAr: 'منصات التجارة الإلكترونية',
+                titleEn: 'E-Commerce Ecosystems',
+                shortAr: 'متاجر إلكترونية متكاملة لإدارة المخزون، الطلبات، الشحن، والدفع الإلكتروني بكفاءة عالية.',
+                shortEn: 'End-to-end e-commerce platforms managing inventory, orders, shipping, and online payments.',
+                deliverablesAr: ['واجهة تسوق سريعة وتجربة إتمام طلب في خطوة واحدة', 'ربط مباشر مع شركات الشحن وبوابات الدفع', 'إدارة المخزون والفروع والخصومات الذكية', 'لوحة متابعة المبيعات وسلوك العملاء'],
+                deliverablesEn: ['High-converting storefront & streamlined checkout', 'Direct shipping & payment gateway integrations', 'Multi-warehouse inventory & coupon engine', 'Sales analytics & customer insights dashboard'],
+                stack: ['Next.js', 'Node.js', 'Stripe / Paymob', 'PostgreSQL', 'Redis'],
+                timelineAr: '3 إلى 6 أسابيع',
+                timelineEn: '3 to 6 Weeks'
+            },
+            {
+                id: 'iot',
+                icon: 'fa-microchip',
+                color: 'violet',
+                badge: 'IoT & Smart Hardware',
+                titleAr: 'حلول إنترنت الأشياء IoT',
+                titleEn: 'IoT & Embedded Solutions',
+                shortAr: 'ربط الأجهزة والحساسات الذكية بلوحات تحكم سحابية وتطبيقات موبايل للمراقبة اللحظية.',
+                shortEn: 'Connecting smart sensors and hardware devices to real-time cloud dashboards and mobile apps.',
+                deliverablesAr: ['برمجة المتحكمات وبروتوكولات الاتصال MQTT/HTTP', 'لوحة تحكم لحظية لقراءة البيانات والتحكم عن بُعد', 'نظام تنبيهات فورية عند تغير القراءات', 'تخزين وتحليل البيانات التاريخية للأجهزة'],
+                deliverablesEn: ['Microcontroller firmware & MQTT/HTTP protocols', 'Real-time telemetry & remote control dashboard', 'Instant threshold alerting system', 'Historical sensor data storage & analytics'],
+                stack: ['MQTT', 'ESP32 / Raspberry Pi', 'Python', 'Node.js', 'InfluxDB', 'Flutter'],
+                timelineAr: '5 إلى 10 أسابيع',
+                timelineEn: '5 to 10 Weeks'
+            },
+            {
+                id: 'uiux',
+                icon: 'fa-pen-nib',
+                color: 'emerald',
+                badge: 'Product Design',
+                titleAr: 'تصميم واجهات وتجربة المستخدم UI/UX',
+                titleEn: 'UI/UX Product Design',
+                shortAr: 'تصميم نماذج تفاعلية وهويات رقمية حديثة تركز على سهولة الاستخدام ووضوح الرحلة.',
+                shortEn: 'Crafting interactive prototypes and modern design systems focused on usability and clarity.',
+                deliverablesAr: ['دراسة رحلة المستخدم وبناء الهيكلة Wireframes', 'تصميم واجهات عالية الدقة للوضعين الليلي والنهاري', 'بناء نظام تصميم متكامل Design System للمطورين', 'نماذج تفاعلية قابلة للاختبار قبل البرمجة'],
+                deliverablesEn: ['User journey mapping & wireframing', 'High-fidelity Light & Dark UI screens', 'Comprehensive developer-ready Design System', 'Interactive clickable prototypes'],
+                stack: ['Figma', 'Design Tokens', 'Prototyping', 'Usability Testing'],
+                timelineAr: '1 إلى 3 أسابيع',
+                timelineEn: '1 to 3 Weeks'
+            },
+            {
+                id: 'ai',
+                icon: 'fa-brain',
+                color: 'violet',
+                badge: 'AI & Automation',
+                titleAr: 'الذكاء الاصطناعي وأتمتة الأعمال',
+                titleEn: 'AI & Workflow Automation',
+                shortAr: 'دمج نماذج الذكاء الاصطناعي والمساعدات الذكية لأتمتة خدمة العملاء وتحليل البيانات.',
+                shortEn: 'Integrating AI models and intelligent assistants to automate customer support and data analysis.',
+                deliverablesAr: ['مساعدات ذكية مدربة على بيانات ووثائق شركتك', 'أتمتة العمليات المتكررة وربط التطبيقات ببعضها', 'تحليل المستندات واستخراج البيانات تلقائياً', 'واجهات برمجية آمنة لحماية خصوصية البيانات'],
+                deliverablesEn: ['Custom AI assistants trained on your knowledge base', 'Automated cross-app operational workflows', 'Intelligent document parsing & data extraction', 'Privacy-first API deployment'],
+                stack: ['Python', 'LangChain', 'OpenAI / Gemini APIs', 'Vector DB', 'FastAPI'],
+                timelineAr: '2 إلى 5 أسابيع',
+                timelineEn: '2 to 5 Weeks'
+            },
+            {
+                id: 'api',
+                icon: 'fa-plug',
+                color: 'emerald',
+                badge: 'Systems Integration',
+                titleAr: 'الربط البرمجي وتطوير APIs',
+                titleEn: 'API Development & Integration',
+                shortAr: 'بناء واجهات برمجية آمنة وعالية السرعة لربط تطبيقاتك مع البنوك، الشحن، والأنظمة المحاسبية.',
+                shortEn: 'Engineering secure, high-throughput APIs connecting your apps with banks, logistics, and ERPs.',
+                deliverablesAr: ['تطوير RESTful و GraphQL APIs موثقة بالكامل', 'تكامل بوابات الدفع والفوترة الإلكترونية', 'تأمين الاتصال عبر OAuth2 و JWT و Rate Limiting', 'اختبارات الضغط والأداء لضمان الاستقرار'],
+                deliverablesEn: ['Fully documented RESTful & GraphQL APIs', 'Payment gateways & e-invoicing integration', 'OAuth2, JWT & Rate Limiting security', 'Load & stress testing for high reliability'],
+                stack: ['Node.js', 'Go', 'Python FastAPI', 'GraphQL', 'Swagger / OpenAPI'],
+                timelineAr: '1 إلى 4 أسابيع',
+                timelineEn: '1 to 4 Weeks'
+            },
+            {
+                id: 'consulting',
+                icon: 'fa-compass',
+                color: 'violet',
+                badge: 'Tech Advisory',
+                titleAr: 'الاستشارات الهندسية ومراجعة الأنظمة',
+                titleEn: 'Technical Consulting & Audits',
+                shortAr: 'تقييم البنية البرمجية الحالية، تحسين سرعة الأداء، ووضع خارطة طريق تقنية دقيقة.',
+                shortEn: 'Auditing existing architectures, optimizing performance bottlenecks, and building tech roadmaps.',
+                deliverablesAr: ['فحص شامل لأداء السيرفرات وقواعد البيانات', 'مراجعة الثغرات الأمنية وجودة الكود البرمجي', 'خطة تقليل تكاليف التشغيل السحابي وتحسين السرعة', 'تحديد التقنيات الأنسب لتوسع المشروع مستقبلاً'],
+                deliverablesEn: ['Comprehensive server & database performance audit', 'Security & code quality review', 'Cloud resource & latency optimization plan', 'Scalable technology stack roadmap'],
+                stack: ['Architecture Review', 'Security Audit', 'Cloud FinOps', 'Performance Tuning'],
+                timelineAr: '1 إلى 2 أسبوع',
+                timelineEn: '1 to 2 Weeks'
+            }
+        ];
+
+        const i18nDict = {
+            ar: {
+                brandTag: 'هندسة وسحابة رقمية',
+                navHome: 'الرئيسية',
+                navServices: 'الخدمات (10)',
+                navHosting: 'الاستضافة والسيرفرات',
+                navAbout: 'من نحن',
+                navPlanner: 'ابدأ مشروعك',
+                navCta: 'احجز استشارة',
+                quickBarLabel: 'تصفح الخدمات:',
+                heroBadge: 'هندسة البرمجيات، التطبيقات، والاستضافة السحابية',
+                heroTitle1: 'نبني البنية الرقمية',
+                heroTitle2: 'المتكاملة لنمو أعمالك',
+                heroDesc: 'في Y Creations نقدم حلولاً هندسية متكاملة تشمل تطوير تطبيقات الهواتف الذكية، الأنظمة البرمجية المخصصة، إنترنت الأشياء، وإدارة السيرفرات السحابية فائقة السرعة بأعلى معايير الأمان والاستقرار.',
+                heroBtnServices: 'استكشف الخدمات العشر',
+                heroBtnHosting: 'السيرفرات والاستضافة',
+                metricUptime: 'مشروع ومنصة رقمية مكتملة',
+                metricServices: 'سنوات من الخبرة الهندسية',
+                metricSupport: 'استقرار السيرفرات ودعم 24/7',
+                portalMobileTitle: 'تطوير تطبيقات الموبايل المتكاملة',
+                portalMobileDesc: 'تطبيقات أصلية وعابرة للمنصات بأداء فائق وتجربة مستخدم سلسة متصلة بالأنظمة السحابية.',
+                portalHostingTitle: 'الاستضافة السحابية والسيرفرات المخصصة',
+                portalHostingDesc: 'بنية تحتية معزولة وعالية الأداء مع حماية DDoS، نسخ احتياطي تلقائي، وإدارة DevOps كاملة.',
+                portalCustomTitle: 'البرمجيات المخصصة وأنظمة إنترنت الأشياء',
+                portalCustomDesc: 'منصات ERP/CRM مصممة لعملياتك مع تكامل كامل مع الحساسات والأجهزة الذكية.',
+                servicesDirBadge: 'دليل الخدمات الهندسية',
+                servicesDirTitle: 'منظومة خدمات Y Creations المتكاملة',
+                servicesDirDesc: 'اختر أي خدمة لاستعراض صفحتها المستقلة بالكامل بما تشمله من مخرجات هندسية، تقنيات مستخدمة، ومراحل التنفيذ.',
+                hostingBadge: 'البنية التحتية والسحابة',
+                hostingTitle: 'الاستضافة السحابية والسيرفرات المخصصة',
+                hostingDesc: 'نوفر بيئات استضافة عالية الاعتمادية مصممة للمنصات الحيوية والتطبيقات كثيفة الزيارات مع إدارة تقنية شاملة دون أي تعقيدات تشغيلية.',
+                hostingCta: 'اطلب استشارة بنية تحتية',
+                srvTier1Title: 'Managed Cloud Hosting',
+                srvTier1Desc: 'استضافة سحابية مُدارة بالكامل للمواقع والمنصات التجارية مع توسع تلقائي للموارد وشهادات SSL مجانية.',
+                srvTier1F1: 'تخزين NVMe SSD فائق السرعة',
+                srvTier1F2: 'شبكة توزيع محتوى عالمية CDN و Caching متقدم',
+                srvTier1F3: 'نسخ احتياطي يومي آلي خارج السيرفر',
+                srvTier2Title: 'High-Performance Cloud VPS',
+                srvTier2Desc: 'خوادم افتراضية معزولة الموارد مخصصة لتشغيل تطبيقات الموبايل والواجهات البرمجية APIs وقواعد البيانات الضخمة.',
+                srvTier2F1: 'معالجات مخصصة Dedicated vCPU وذاكرة ECC',
+                srvTier2F2: 'صلاحيات تحكم كاملة مع مراقبة الأداء لحظياً',
+                srvTier2F3: 'جدار حماية متقدم WAF وحماية من هجمات DDoS',
+                srvTier3Title: 'Dedicated Bare-Metal Servers',
+                srvTier3Desc: 'خوادم فيزيائية مستقلة بالكامل للمؤسسات الكبرى والأنظمة المالية التي تتطلب أقصى درجات العزل والأمان.',
+                srvTier3F1: 'عتاد مخصص 100% دون مشاركة مع أي عميل آخر',
+                srvTier3F2: 'مصفوفات تخزين RAID للأمان واستمرارية البيانات',
+                srvTier3F3: 'اتصال شبكي فائق السرعة 10Gbps Uplink',
+                srvTier4Title: 'DevOps, CI/CD & Server Migration',
+                srvTier4Desc: 'أتمتة النشر البرمجي ونقل قواعد البيانات والمواقع من استضافتك القديمة إلى بنيتنا السحابية دون توقف الخدمة.',
+                srvTier4F1: 'نقل مجاني وآمن Zero-Downtime Migration',
+                srvTier4F2: 'حاويات Docker و Kubernetes للتوسع المرن',
+                srvTier4F3: 'تنبيهات فورية واستجابة هندسية على مدار الساعة',
+                aboutBadge: 'عن الشركة ومسيرتنا الهندسية',
+                aboutExpBadge: 'أكثر من 8 سنوات من التميز البرمجي والسحابي',
+                aboutTitle: 'بيت خبرة هندسي متكامل يبني أنظمة رقمية تصنع الفارق وتدوم لسنوات',
+                aboutDesc: 'منذ انطلاقتنا، وضعت Y Creations معياراً هندسياً رفيعاً في صناعة البرمجيات وإدارة البنية التحتية السحابية. على مدار سنوات طويلة من العمل المتواصل، نجحنا في تسليم وتشغيل أكثر من 240 مشروعاً برمجياً وسحابياً متكاملاً لعملائنا في مصر والوطن العربي والأسواق العالمية، بدءاً من الشركات الناشئة الطموحة وصولاً إلى المؤسسات الكبرى ذات العمليات التشغيلية المعقدة.',
+                aboutDesc2: 'نحن لا نكتفي بكتابة الأكواد البرمجية فحسب، بل نصمم منظومات تقنية شاملة تبدأ من تحليل دورة العمل وهندسة قواعد البيانات عالية التحمل، مروراً بتطوير تطبيقات الهواتف الذكية والأنظمة الإدارية المخصصة، وصولاً إلى استضافة وإدارة السيرفرات المخصصة لضمان سرعة فائقة واستمرارية عمل بنسبة 99.99% على مدار الساعة.',
+                aboutStat1: 'مشروع برمجي ومنصة مُسلّمة',
+                aboutStat2: 'تطبيق موبايل iOS و Android',
+                aboutStat3: 'سيرفر سحابي وبنية تحتية مُدارة',
+                aboutStat4: 'قطاعاً تجارياً وصناعياً مخدوماً',
+                sectorsTitle: 'سجل حافل بالحلول والأنظمة المنفذة في مختلف القطاعات',
+                sectorsDesc: 'خبرتنا التراكمية مكنتنا من بناء عشرات الأنظمة المتخصصة التي تعمل بكفاءة عالية يومياً:',
+                sec1Title: 'الأنظمة المالية والتجارية',
+                sec1Desc: 'منصات إدارة الموارد المؤسسية ERP، أنظمة نقاط البيع السحابية، وبوابات الدفع والتحصيل الآلي.',
+                sec2Title: 'التجارة الإلكترونية واللوجستيات',
+                sec2Desc: 'متاجر إلكترونية متعددة البائعين، تطبيقات توصيل الطلبات والتتبع اللحظي GPS، وإدارة المستودعات.',
+                sec3Title: 'الرعاية الصحية والعيادات الذكية',
+                sec3Desc: 'منصات حجز المواعيد الطبية، السجلات الصحية الإلكترونية، وتطبيقات الاستشارات الطبية عن بُعد.',
+                sec4Title: 'المنصات التعليمية والتدريب',
+                sec4Desc: 'أنظمة إدارة التعلم LMS، منصات البث المباشر المحمية، والاختبارات التفاعلية المدعومة بالذكاء الاصطناعي.',
+                sec5Title: 'الصناعة وإنترنت الأشياء IoT',
+                sec5Desc: 'أنظمة مراقبة خطوط الإنتاج والحساسات الذكية ولوحات التحكم الصناعية الفورية.',
+                sec6Title: 'البنية التحتية والسيرفرات المدارة',
+                sec6Desc: 'تجهيز وإدارة السيرفرات السحابية عالية التوافر للمواقع والتطبيقات ذات الزيارات المليونية.',
+                footerTagline: 'هندسة البرمجيات، التطبيقات، والاستضافة السحابية المتكاملة',
+                val1Title: 'هندسة قابلة للتوسع',
+                val1Desc: 'نبني قواعد بيانات وهياكل برمجية نظيفة تتحمل نمو المستخدمين والبيانات دون الحاجة لإعادة البناء.',
+                val2Title: 'أمان واعتمادية أولاً',
+                val2Desc: 'تطبيق معايير التشفير الحديثة وحماية الخوادم في كل مرحلة من مراحل التطوير والاستضافة.',
+                val3Title: 'شراكة تقنية مستمرة',
+                val3Desc: 'لا ينتهي دورنا عند الإطلاق؛ بل نستمر في المراقبة، الصيانة، وتطوير المزايا الجديدة.',
+                plannerBadge: 'ابدأ مشروعك',
+                plannerTitle: 'أرسل تفاصيل مشروعك لفريقنا',
+                plannerDesc: 'حدد الخدمات المطلوبة وأدخل بيانات التواصل وسيقوم فريقنا الهندسي بدراسة طلبك والتواصل معك.',
+                plannerSelectServices: 'اختر الخدمات المطلوبة (يمكن اختيار أكثر من خدمة):',
+                labelName: 'الاسم الكامل *',
+                labelPhone: 'رقم الهاتف / واتساب *',
+                labelEmail: 'البريد الإلكتروني (اختياري)',
+                labelNotes: 'تفاصيل المشروع أو المتطلبات التقنية',
+                btnSendRequest: 'إرسال الطلب الآن',
+                contactDirectTitle: 'قنوات التواصل الهندسية',
+                contactLocLabel: 'المقر الرئيسي',
+                contactLocVal: 'الدقي، القاهرة، جمهورية مصر العربية',
+                contactMailLabel: 'البريد الرسمي',
+                nextStepsTitle: 'ماذا يحدث بعد إرسال طلبك؟',
+                step1Text: 'يصل طلبك فوراً إلى فريقنا الهندسي عبر السحابة.',
+                step2Text: 'نراجع المتطلبات التقنية ونحدد البنية الأنسب لمشروعك.',
+                step3Text: 'نتواصل معك لتحديد خطة التنفيذ والجدول الزمني.',
+                adminLockBadge: 'منطقة الإدارة الخاصة',
+                adminLockTitle: 'تسجيل دخول المالك',
+                adminLockDesc: 'هذه اللوحة مخصصة لمدير النظام فقط لقراءة رسائل العملاء الواردة. أدخل كلمة المرور الخاصة بك للمتابعة.',
+                adminPinHint: 'كلمة المرور الافتراضية: Ycreations@2026 (يمكنك تغييرها من داخل اللوحة)',
+                adminUnlockBtn: 'فتح لوحة الرسائل',
+                adminBackHome: 'العودة لصفحة الزوار الرئيسية',
+                inboxBadge: 'لوحة تحكم المالك • محمية',
+                inboxTitle: 'صندوق رسائل وطلبات العملاء',
+                inboxSubtitle: 'مزامنة سحابية فورية لجميع الرسائل المرسلة من الزوار. لا يمكن لأي زائر رؤية هذه الصفحة.',
+                adminChangePinBtn: 'تغيير كلمة المرور',
+                adminLockBtn: 'قفل اللوحة',
+                statTotalLabel: 'إجمالي الرسائل',
+                statNewLabel: 'رسائل جديدة',
+                statRepliedLabel: 'تم التواصل',
+                filterAll: 'الكل',
+                filterNew: 'جديدة',
+                filterReviewing: 'قيد المراجعة',
+                filterReplied: 'تم التواصل',
+                changePinTitle: 'تغيير كلمة مرور المالك',
+                changePinDesc: 'أدخل كلمة المرور الحالية ثم كلمة المرور الجديدة لحفظها بأمان في سحابة حسابك.',
+                currentPassLabel: 'كلمة المرور الحالية *',
+                newPassLabel: 'كلمة المرور الجديدة (6 أحرف على الأقل) *',
+                confirmPassLabel: 'تأكيد كلمة المرور الجديدة *',
+                savePinBtn: 'حفظ كلمة المرور',
+                cancelBtn: 'إلغاء'
+            },
+            en: {
+                brandTag: 'Engineering & Cloud',
+                navHome: 'Home',
+                navServices: 'Services (10)',
+                navHosting: 'Hosting & Servers',
+                navAbout: 'About Us',
+                navPlanner: 'Start Project',
+                navCta: 'Book Consultation',
+                quickBarLabel: 'Explore Services:',
+                heroBadge: 'Software Engineering, Mobile Apps & Cloud Hosting',
+                heroTitle1: 'Building Resilient',
+                heroTitle2: 'Digital Infrastructure',
+                heroDesc: 'At Y Creations, we deliver end-to-end engineering solutions spanning mobile applications, custom enterprise software, IoT systems, and high-speed managed cloud servers built for maximum security and uptime.',
+                heroBtnServices: 'Explore All 10 Services',
+                heroBtnHosting: 'Servers & Cloud Hosting',
+                metricUptime: 'Completed Digital Projects',
+                metricServices: 'Years of Engineering Experience',
+                metricSupport: 'Server Uptime & 24/7 Support',
+                portalMobileTitle: 'End-to-End Mobile App Development',
+                portalMobileDesc: 'Native and cross-platform iOS & Android applications seamlessly integrated with cloud backends.',
+                portalHostingTitle: 'Cloud Hosting & Dedicated Servers',
+                portalHostingDesc: 'Isolated high-performance infrastructure with DDoS protection, automated backups, and DevOps.',
+                portalCustomTitle: 'Custom Software & IoT Ecosystems',
+                portalCustomDesc: 'Tailored ERP/CRM platforms engineered for your operations with smart hardware integration.',
+                servicesDirBadge: 'Engineering Directory',
+                servicesDirTitle: 'Y Creations Integrated Services',
+                servicesDirDesc: 'Select any service to open its dedicated standalone page featuring deliverables, tech stack, and execution timeline.',
+                hostingBadge: 'Cloud Infrastructure',
+                hostingTitle: 'Cloud Hosting & Dedicated Servers',
+                hostingDesc: 'Enterprise-grade hosting environments engineered for mission-critical platforms and high-traffic apps with full technical management.',
+                hostingCta: 'Request Infrastructure Consultation',
+                srvTier1Title: 'Managed Cloud Hosting',
+                srvTier1Desc: 'Fully managed cloud hosting for corporate websites and platforms with auto-scaling and SSL.',
+                srvTier1F1: 'Ultra-fast NVMe SSD Storage',
+                srvTier1F2: 'Global CDN & Advanced Edge Caching',
+                srvTier1F3: 'Automated Daily Off-site Backups',
+                srvTier2Title: 'High-Performance Cloud VPS',
+                srvTier2Desc: 'Isolated virtual servers tailored for mobile app backends, APIs, and high-load databases.',
+                srvTier2F1: 'Dedicated vCPU Cores & ECC Memory',
+                srvTier2F2: 'Full Root Control & Real-Time Metrics',
+                srvTier2F3: 'Enterprise WAF & DDoS Mitigation',
+                srvTier3Title: 'Dedicated Bare-Metal Servers',
+                srvTier3Desc: '100% single-tenant physical servers for enterprises requiring maximum isolation and security.',
+                srvTier3F1: 'Zero Resource Sharing Dedicated Hardware',
+                srvTier3F2: 'Hardware RAID Storage Redundancy',
+                srvTier3F3: 'High-Throughput 10Gbps Network Uplink',
+                srvTier4Title: 'DevOps, CI/CD & Server Migration',
+                srvTier4Desc: 'Automated deployment pipelines and seamless migration from legacy hosts with zero downtime.',
+                srvTier4F1: 'Free Zero-Downtime Migration',
+                srvTier4F2: 'Docker & Kubernetes Container Orchestration',
+                srvTier4F3: '24/7 Proactive Incident Response',
+                aboutBadge: 'About Y Creations & Our Track Record',
+                aboutExpBadge: '8+ Years of Software & Cloud Excellence',
+                aboutTitle: 'An Established Engineering House Building Resilient Digital Systems',
+                aboutDesc: 'Since our inception, Y Creations has set a high engineering benchmark in software development and managed cloud infrastructure. Over years of dedicated execution, we have successfully delivered and operated 240+ integrated software and cloud projects for clients across Egypt, the MENA region, and global markets—from ambitious startups to large-scale enterprises.',
+                aboutDesc2: 'We go beyond writing code; we architect complete digital ecosystems starting from workflow analysis and high-throughput database design, through native mobile apps and custom enterprise platforms, all the way to dedicated server hosting ensuring 99.99% continuous uptime.',
+                aboutStat1: 'Delivered Software & Web Projects',
+                aboutStat2: 'iOS & Android Mobile Apps',
+                aboutStat3: 'Managed Cloud Servers & Clusters',
+                aboutStat4: 'Industries & Sectors Served',
+                sectorsTitle: 'Extensive Portfolio of Systems Delivered Across Diverse Sectors',
+                sectorsDesc: 'Our accumulated expertise has enabled us to engineer dozens of specialized platforms operating reliably every day:',
+                sec1Title: 'Financial & Enterprise Systems',
+                sec1Desc: 'ERP platforms, cloud point-of-sale systems, and automated payment & billing gateways.',
+                sec2Title: 'E-Commerce & Logistics',
+                sec2Desc: 'Multi-vendor marketplaces, live GPS delivery tracking apps, and smart warehouse management.',
+                sec3Title: 'Healthcare & Smart Clinics',
+                sec3Desc: 'Medical appointment booking platforms, electronic health records, and telemedicine apps.',
+                sec4Title: 'EdTech & Training Portals',
+                sec4Desc: 'Learning management systems (LMS), DRM-protected live streaming, and AI-powered assessments.',
+                sec5Title: 'Industrial & IoT Solutions',
+                sec5Desc: 'Production line telemetry, smart sensor networks, and real-time industrial control dashboards.',
+                sec6Title: 'Managed Cloud & Server Infrastructure',
+                sec6Desc: 'Provisioning and managing high-availability cloud clusters for high-traffic applications.',
+                footerTagline: 'Software Engineering, Mobile Apps & Managed Cloud Hosting',
+                val1Title: 'Scalable Architecture',
+                val1Desc: 'Clean codebases and database structures engineered to handle growth without costly rewrites.',
+                val2Title: 'Security & Reliability First',
+                val2Desc: 'Modern encryption and server hardening applied across every layer of development and hosting.',
+                val3Title: 'Long-Term Tech Partnership',
+                val3Desc: 'Beyond launch, we continuously monitor, maintain, and evolve your platform.',
+                plannerBadge: 'Start Your Project',
+                plannerTitle: 'Send Your Project Details to Our Team',
+                plannerDesc: 'Select the services you need and leave your contact details. Our engineering team will review and reach out shortly.',
+                plannerSelectServices: 'Select Required Services (Multiple allowed):',
+                labelName: 'Full Name *',
+                labelPhone: 'Phone / WhatsApp *',
+                labelEmail: 'Email Address (Optional)',
+                labelNotes: 'Project Scope or Technical Requirements',
+                btnSendRequest: 'Submit Request Now',
+                contactDirectTitle: 'Engineering Contact Channels',
+                contactLocLabel: 'Headquarters',
+                contactLocVal: 'Dokki, Cairo, Egypt',
+                contactMailLabel: 'Official Email',
+                nextStepsTitle: 'What Happens After You Submit?',
+                step1Text: 'Your inquiry is securely synced to our cloud inbox immediately.',
+                step2Text: 'Our architects review your technical scope and server requirements.',
+                step3Text: 'We contact you directly to align on execution roadmap and timeline.',
+                adminLockBadge: 'Private Owner Area',
+                adminLockTitle: 'Owner Login',
+                adminLockDesc: 'This dashboard is strictly restricted to the system owner to read incoming client messages. Enter your password to continue.',
+                adminPinHint: 'Default password: Ycreations@2026 (Can be changed inside the dashboard)',
+                adminUnlockBtn: 'Unlock Messages Inbox',
+                adminBackHome: 'Back to Public Website',
+                inboxBadge: 'Owner Dashboard • Protected',
+                inboxTitle: 'Client Inquiries & Messages Inbox',
+                inboxSubtitle: 'Real-time cloud sync for all submitted visitor inquiries. Hidden from public visitors.',
+                adminChangePinBtn: 'Change Password',
+                adminLockBtn: 'Lock Dashboard',
+                statTotalLabel: 'Total Messages',
+                statNewLabel: 'New Messages',
+                statRepliedLabel: 'Contacted',
+                filterAll: 'All',
+                filterNew: 'New',
+                filterReviewing: 'Reviewing',
+                filterReplied: 'Contacted',
+                changePinTitle: 'Change Owner Password',
+                changePinDesc: 'Enter your current password and new password to update your cloud access credentials.',
+                currentPassLabel: 'Current Password *',
+                newPassLabel: 'New Password (Min 6 characters) *',
+                confirmPassLabel: 'Confirm New Password *',
+                savePinBtn: 'Save Password',
+                cancelBtn: 'Cancel'
+            }
+        };
+
+        // Toast Helper (Replaces alert())
+        window.showToast = function(message, isError = false) {
+            const toast = document.getElementById('toastNotification');
+            const textEl = document.getElementById('toastText');
+            const iconEl = document.getElementById('toastIcon');
+            if (!toast || !textEl) return;
+            textEl.textContent = message;
+            iconEl.className = isError
+                ? 'fa-solid fa-circle-exclamation text-rose-500 text-base'
+                : 'fa-solid fa-circle-check text-emerald-500 text-base';
+            toast.classList.remove('hidden');
+            toast.classList.add('flex');
+            clearTimeout(window._toastTimer);
+            window._toastTimer = setTimeout(() => {
+                toast.classList.add('hidden');
+                toast.classList.remove('flex');
+            }, 3800);
+        };
+
+        // Multi-Page Router (Supports secret #admin hash)
+        window.navigateTo = function(pageId) {
+            activePage = pageId;
+            document.querySelectorAll('.page-view').forEach(sec => sec.classList.remove('active'));
+            const target = document.getElementById(`page-${pageId}`);
+            if (target) {
+                target.classList.add('active');
+            }
+
+            // Update Top Nav Pill Active Styling
+            document.querySelectorAll('.nav-pill').forEach(btn => {
+                if (btn.dataset.nav === pageId) {
+                    btn.className = 'nav-pill px-4 py-2 rounded-xl text-xs font-extrabold bg-emerald-500 text-slate-950 shadow-md transition-all cursor-pointer';
+                } else {
+                    btn.className = 'nav-pill px-4 py-2 rounded-xl text-xs font-extrabold text-slate-600 dark:text-slate-300 hover:bg-slate-200/70 dark:hover:bg-white/10 transition-all cursor-pointer';
+                }
+            });
+
+            // Sync URL hash cleanly
+            if (pageId === 'inbox') {
+                if (window.location.hash !== '#admin') history.replaceState(null, '', '#admin');
+            } else if (window.location.hash === '#admin') {
+                history.replaceState(null, '', window.location.pathname + window.location.search);
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        // Open Standalone Service Page
+        window.openServiceDetail = function(serviceId) {
+            const srv = servicesCatalog.find(s => s.id === serviceId);
+            if (!srv) return;
+            activeServiceId = serviceId;
+            renderServiceDetailView(srv);
+            navigateTo('service-detail');
+        };
+
+        function renderServiceDetailView(srv) {
+            const container = document.getElementById('serviceDetailContainer');
+            if (!container) return;
+            const isAr = currentLang === 'ar';
+            const title = isAr ? srv.titleAr : srv.titleEn;
+            const shortDesc = isAr ? srv.shortAr : srv.shortEn;
+            const deliverables = isAr ? srv.deliverablesAr : srv.deliverablesEn;
+            const timeline = isAr ? srv.timelineAr : srv.timelineEn;
+
+            container.innerHTML = `
+                <div class="mb-6 flex items-center justify-between flex-wrap gap-3">
+                    <button type="button" onclick="navigateTo('services')" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl glass-panel border border-slate-200 dark:border-white/10 text-xs font-extrabold hover:border-emerald-500 transition-all cursor-pointer">
+                        <i class="fa-solid fa-arrow-right rtl-flip text-emerald-500"></i>
+                        <span>${isAr ? 'العودة لجميع الخدمات' : 'Back to All Services'}</span>
+                    </button>
+                    <span class="px-3.5 py-1 rounded-full bg-emerald-500/10 text-emerald-500 text-xs font-extrabold">${srv.badge}</span>
+                </div>
+
+                <div class="rounded-3xl glass-panel p-8 sm:p-12 border border-slate-200 dark:border-white/10 shadow-2xl">
+                    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-8 border-b border-slate-200/70 dark:border-white/10">
+                        <div class="flex items-start gap-5">
+                            <div class="w-16 h-16 rounded-2xl bg-emerald-500/15 text-emerald-500 flex items-center justify-center text-3xl shrink-0">
+                                <i class="fa-solid ${srv.icon}"></i>
+                            </div>
+                            <div>
+                                <h1 class="text-2xl sm:text-4xl font-black mb-2">${title}</h1>
+                                <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base max-w-2xl leading-relaxed">${shortDesc}</p>
+                            </div>
+                        </div>
+                        <button type="button" onclick="requestServiceInPlanner('${srv.titleEn}')" class="px-6 py-4 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black text-sm transition-all shadow-xl shadow-emerald-500/20 shrink-0 cursor-pointer">
+                            ${isAr ? 'اطلب هذه الخدمة الآن' : 'Request This Service'}
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-8">
+                        <div class="lg:col-span-7 space-y-4">
+                            <h3 class="text-lg font-black flex items-center gap-2">
+                                <i class="fa-solid fa-list-check text-emerald-500"></i>
+                                <span>${isAr ? 'المخرجات الهندسية ونطاق العمل' : 'Engineering Deliverables & Scope'}</span>
+                            </h3>
+                            <div class="grid grid-cols-1 gap-3">
+                                ${deliverables.map(item => `
+                                    <div class="p-4 rounded-2xl bg-slate-100/80 dark:bg-white/5 border border-slate-200/60 dark:border-white/10 flex items-center gap-3">
+                                        <i class="fa-solid fa-circle-check text-emerald-500"></i>
+                                        <span class="text-xs sm:text-sm font-bold">${item}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-5 space-y-6">
+                            <div class="p-6 rounded-2xl bg-slate-100/80 dark:bg-white/5 border border-slate-200/60 dark:border-white/10">
+                                <h4 class="text-sm font-black mb-3 text-violet-400 flex items-center gap-2">
+                                    <i class="fa-solid fa-layer-group"></i>
+                                    <span>${isAr ? 'التقنيات والأدوات المستخدمة' : 'Technology Stack'}</span>
+                                </h4>
+                                <div class="flex flex-wrap gap-2">
+                                    ${srv.stack.map(tech => `<span class="px-3 py-1.5 rounded-xl bg-white dark:bg-black/50 border border-slate-200 dark:border-white/10 text-xs font-mono font-bold">${tech}</span>`).join('')}
+                                </div>
+                            </div>
+
+                            <div class="p-6 rounded-2xl bg-emerald-500/10 border border-emerald-500/25">
+                                <div class="text-xs font-extrabold text-emerald-500 mb-1">${isAr ? 'المدة الزمنية التقديرية للتنفيذ' : 'Estimated Delivery Timeline'}</div>
+                                <div class="text-lg font-black">${timeline}</div>
+                                <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">${isAr ? 'يتم تحديد الجدول الزمني الدقيق بعد جلسة تحليل المتطلبات.' : 'Exact schedule finalized after technical discovery.'}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        window.requestServiceInPlanner = function(serviceNameEn) {
+            window.selectedPlannerServices.add(serviceNameEn);
+            renderPlannerCheckboxes();
+            navigateTo('planner');
+        };
+
+        function renderQuickBarAndDirectory() {
+            const isAr = currentLang === 'ar';
+            const quickBar = document.getElementById('quickBarPills');
+            const grid = document.getElementById('allServicesGrid');
+
+            if (quickBar) {
+                quickBar.innerHTML = servicesCatalog.map(srv => `
+                    <button type="button" onclick="openServiceDetail('${srv.id}')"
+                        class="px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer
+                        ${activePage === 'service-detail' && activeServiceId === srv.id
+                            ? 'bg-emerald-500 text-slate-950 font-black'
+                            : 'bg-white/80 dark:bg-white/5 hover:bg-emerald-500/15 text-slate-700 dark:text-slate-300 border border-slate-200/70 dark:border-white/10'}">
+                        <i class="fa-solid ${srv.icon} text-[11px] ${activePage === 'service-detail' && activeServiceId === srv.id ? 'text-slate-950' : 'text-emerald-500'}"></i>
+                        <span>${isAr ? srv.titleAr : srv.titleEn}</span>
+                    </button>
+                `).join('');
+            }
+
+            if (grid) {
+                grid.innerHTML = servicesCatalog.map((srv, idx) => `
+                    <div onclick="openServiceDetail('${srv.id}')" class="group rounded-3xl glass-panel p-6 border border-slate-200 dark:border-white/10 hover:border-emerald-500/50 transition-all cursor-pointer flex flex-col justify-between shadow-lg">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="w-12 h-12 rounded-2xl ${srv.color === 'emerald' ? 'bg-emerald-500/15 text-emerald-500' : 'bg-violet-500/15 text-violet-400'} flex items-center justify-center text-xl">
+                                    <i class="fa-solid ${srv.icon}"></i>
+                                </div>
+                                <span class="text-xs font-mono font-black text-slate-400">0${idx + 1}</span>
+                            </div>
+                            <h3 class="text-lg font-black mb-2 group-hover:text-emerald-400 transition-colors">${isAr ? srv.titleAr : srv.titleEn}</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-4">${isAr ? srv.shortAr : srv.shortEn}</p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-200/60 dark:border-white/10 flex items-center justify-between text-xs font-extrabold text-emerald-500">
+                            <span>${isAr ? 'استعراض صفحة الخدمة' : 'Open Service Page'}</span>
+                            <i class="fa-solid fa-arrow-left rtl-flip group-hover:-translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        window.renderPlannerCheckboxes = function() {
+            const container = document.getElementById('plannerServicesCheckboxes');
+            if (!container) return;
+            const isAr = currentLang === 'ar';
+            container.innerHTML = servicesCatalog.map(srv => {
+                const isSelected = window.selectedPlannerServices.has(srv.titleEn);
+                return `
+                    <button type="button" onclick="togglePlannerService('${srv.titleEn}')"
+                        class="px-3.5 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2 cursor-pointer border
+                        ${isSelected
+                            ? 'bg-emerald-500 text-slate-950 border-emerald-500 shadow-md'
+                            : 'bg-slate-100/80 dark:bg-white/5 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-white/10 hover:border-emerald-500/50'}">
+                        <i class="fa-solid ${isSelected ? 'fa-check' : srv.icon} text-xs"></i>
+                        <span>${isAr ? srv.titleAr : srv.titleEn}</span>
+                    </button>
+                `;
+            }).join('');
+        };
+
+        window.togglePlannerService = function(titleEn) {
+            if (window.selectedPlannerServices.has(titleEn)) {
+                window.selectedPlannerServices.delete(titleEn);
+            } else {
+                window.selectedPlannerServices.add(titleEn);
+            }
+            renderPlannerCheckboxes();
+        };
+
+        // Bilingual Switcher (AR / EN)
+        window.toggleLanguage = function() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            const htmlEl = document.documentElement;
+            htmlEl.setAttribute('lang', currentLang);
+            htmlEl.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+            document.getElementById('langLabel').textContent = currentLang === 'ar' ? 'EN' : 'عربي';
+
+            const dict = i18nDict[currentLang];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (dict[key]) el.textContent = dict[key];
+            });
+
+            renderQuickBarAndDirectory();
+            renderPlannerCheckboxes();
+            if (activeServiceId) {
+                const srv = servicesCatalog.find(s => s.id === activeServiceId);
+                if (srv) renderServiceDetailView(srv);
+            }
+        };
+
+        // Light / Dark Mode Switcher
+        window.toggleTheme = function() {
+            const htmlEl = document.documentElement;
+            const isDark = htmlEl.classList.toggle('dark');
+            const icon = document.getElementById('themeIcon');
+            icon.className = isDark ? 'fa-solid fa-sun text-amber-400' : 'fa-solid fa-moon text-violet-600';
+        };
+
+        window.toggleMobileDrawer = function() {
+            const drawer = document.getElementById('mobileDrawer');
+            drawer.classList.toggle('hidden');
+        };
+
+        // Show / Hide Password Toggle
+        window.togglePasswordVisibility = function(inputId, iconId) {
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
+            if (!input || !icon) return;
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        };
+
+        // Secret Admin Route Handler (#admin or Ctrl+Shift+A)
+        function checkSecretAdminRoute() {
+            if (window.location.hash === '#admin') {
+                navigateTo('inbox');
+            }
+        }
+        window.addEventListener('hashchange', checkSecretAdminRoute);
+        window.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+                e.preventDefault();
+                navigateTo('inbox');
+            }
+        });
+
+        // Initial Render
+        renderQuickBarAndDirectory();
+        renderPlannerCheckboxes();
+        navigateTo('home');
+        checkSecretAdminRoute();
+    </script>
+
+    <!-- ===================================================================== -->
+    <!-- FIREBASE CLOUD DATABASE & PRIVATE ADMIN SYNC (ycreatiim)              -->
+    <!-- ===================================================================== -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // User's Provided Firebase Project Configuration (ycreatiim)
+        const userFirebaseConfig = {
+            apiKey: "AIzaSyAs6CyIMMzqLPWMNz__3FkeLAkEWXHEZjs",
+            authDomain: "ycreatiim.firebaseapp.com",
+            projectId: "ycreatiim",
+            storageBucket: "ycreatiim.firebasestorage.app",
+            messagingSenderId: "991573752221",
+            appId: "1:991573752221:web:d78721b71c6d3366fa5774"
+        };
+
+        const firebaseConfig = typeof __firebase_config !== 'undefined'
+            ? JSON.parse(__firebase_config)
+            : userFirebaseConfig;
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'ycreatiim';
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUser = null;
+        let messagesList = [];
+        let ownerPassword = 'Ycreations@2026';
+        let isAdminUnlocked = false;
+        let currentFilter = 'all';
+        let unsubscribeMessages = null;
+
+        // Public inquiries collection path following strict artifact rules
+        const inquiriesColRef = collection(db, 'artifacts', appId, 'public', 'data', 'inquiries');
+        const settingsDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'admin_security');
+
+        // Authenticate first before any Firestore operations
+        async function initFirebaseAuth() {
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (err) {
+                console.error("Auth initialization error:", err);
+            }
+        }
+
+        onAuthStateChanged(auth, async (user) => {
+            currentUser = user;
+            if (!user) return;
+
+            // Load custom owner password if saved in Firestore
+            try {
+                const pinSnap = await getDoc(settingsDocRef);
+                if (pinSnap.exists() && pinSnap.data().password) {
+                    ownerPassword = String(pinSnap.data().password);
+                }
+            } catch (e) {
+                console.warn("Using default password:", e);
+            }
+
+            // Start real-time listener only when admin unlocks dashboard
+            if (isAdminUnlocked) {
+                startMessagesListener();
+            }
+        });
+
+        function startMessagesListener() {
+            if (!currentUser || unsubscribeMessages) return;
+            unsubscribeMessages = onSnapshot(inquiriesColRef, (snapshot) => {
+                const items = [];
+                snapshot.forEach((docSnap) => {
+                    items.push({ id: docSnap.id, ...docSnap.data() });
+                });
+                // Sort newest first in memory (No orderBy in Firestore query)
+                items.sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
+                messagesList = items;
+                window.renderInboxMessages();
+            }, (error) => {
+                console.error("Firestore snapshot error:", error);
+                window.showToast("تعذر تحميل الرسائل، تأكد من تفعيل Firestore Rules", true);
+            });
+        }
+
+        // Expose Submit Inquiry Function to End-User Form
+        window.submitProjectInquiry = async function(event) {
+            event.preventDefault();
+            const submitBtn = document.getElementById('plannerSubmitBtn');
+            const name = document.getElementById('clientNameInput')?.value.trim();
+            const email = document.getElementById('clientEmailInput')?.value.trim();
+            const phone = document.getElementById('clientPhoneInput')?.value.trim();
+            const notes = document.getElementById('clientNotesInput')?.value.trim();
+            const selectedServices = Array.from(window.selectedPlannerServices || []);
+
+            if (!name || !phone) {
+                window.showToast("يرجى إدخال الاسم ورقم التواصل", true);
+                return;
+            }
+
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.classList.add('opacity-60');
+            }
+
+            try {
+                if (!currentUser) {
+                    await initFirebaseAuth();
+                }
+                if (!auth.currentUser) {
+                    throw new Error("Authentication unavailable");
+                }
+
+                await addDoc(inquiriesColRef, {
+                    name,
+                    email: email || '',
+                    phone,
+                    notes: notes || '',
+                    services: selectedServices,
+                    status: 'new',
+                    createdAt: new Date().toISOString(),
+                    createdAtMs: Date.now(),
+                    uid: auth.currentUser.uid
+                });
+
+                event.target.reset();
+                if (window.selectedPlannerServices) {
+                    window.selectedPlannerServices.clear();
+                    if (typeof window.renderPlannerCheckboxes === 'function') {
+                        window.renderPlannerCheckboxes();
+                    }
+                }
+                window.showToast("تم إرسال طلبك بنجاح! سيتواصل معك فريق Y Creations قريباً.");
+            } catch (error) {
+                console.error("Error saving inquiry:", error);
+                window.showToast("حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى.", true);
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('opacity-60');
+                }
+            }
+        };
+
+        // Admin Unlock / Lock Handlers
+        window.unlockAdminDashboard = function(event) {
+            event.preventDefault();
+            const inputEl = document.getElementById('adminPinInput');
+            const errEl = document.getElementById('adminPinError');
+            const entered = inputEl.value;
+
+            if (entered === ownerPassword) {
+                isAdminUnlocked = true;
+                errEl.classList.add('hidden');
+                inputEl.value = '';
+                document.getElementById('adminLockScreen').classList.add('hidden');
+                document.getElementById('adminUnlockedContent').classList.remove('hidden');
+                startMessagesListener();
+                window.showToast("مرحباً بك في لوحة تحكم المالك");
+            } else {
+                errEl.textContent = "كلمة المرور غير صحيحة، حاول مرة أخرى.";
+                errEl.classList.remove('hidden');
+            }
+        };
+
+        window.lockAdminDashboard = function() {
+            isAdminUnlocked = false;
+            if (unsubscribeMessages) {
+                unsubscribeMessages();
+                unsubscribeMessages = null;
+            }
+            document.getElementById('adminUnlockedContent').classList.add('hidden');
+            document.getElementById('adminLockScreen').classList.remove('hidden');
+            window.navigateTo('home');
+        };
+
+        window.openChangePinModal = function() {
+            document.getElementById('changePassError').classList.add('hidden');
+            document.getElementById('currentPinInput').value = '';
+            document.getElementById('newPinInput').value = '';
+            document.getElementById('confirmPinInput').value = '';
+            document.getElementById('changePinModal').classList.remove('hidden');
+            document.getElementById('changePinModal').classList.add('flex');
+        };
+
+        window.closeChangePinModal = function() {
+            document.getElementById('changePinModal').classList.add('hidden');
+            document.getElementById('changePinModal').classList.remove('flex');
+        };
+
+        window.saveNewAdminPin = async function(event) {
+            event.preventDefault();
+            const currentPass = document.getElementById('currentPinInput').value;
+            const newPass = document.getElementById('newPinInput').value.trim();
+            const confirmPass = document.getElementById('confirmPinInput').value.trim();
+            const errEl = document.getElementById('changePassError');
+
+            if (currentPass !== ownerPassword) {
+                errEl.textContent = "كلمة المرور الحالية غير صحيحة.";
+                errEl.classList.remove('hidden');
+                return;
+            }
+            if (newPass.length < 6) {
+                errEl.textContent = "يجب أن تتكون كلمة المرور الجديدة من 6 أحرف على الأقل.";
+                errEl.classList.remove('hidden');
+                return;
+            }
+            if (newPass !== confirmPass) {
+                errEl.textContent = "كلمة المرور الجديدة وتأكيدها غير متطابقتين.";
+                errEl.classList.remove('hidden');
+                return;
+            }
+            if (!currentUser) return;
+
+            try {
+                await setDoc(settingsDocRef, { password: newPass, updatedAt: Date.now() }, { merge: true });
+                ownerPassword = newPass;
+                errEl.classList.add('hidden');
+                window.closeChangePinModal();
+                window.showToast("تم تغيير كلمة مرور المالك وحفظها في السحابة بنجاح");
+            } catch (e) {
+                console.error("Failed to save password:", e);
+                window.showToast("تعذر حفظ كلمة المرور الجديدة", true);
+            }
+        };
+
+        window.lockAdminDashboard = function() {
+            isAdminUnlocked = false;
+            if (unsubscribeMessages) {
+                unsubscribeMessages();
+                unsubscribeMessages = null;
+            }
+            document.getElementById('adminUnlockedContent').classList.add('hidden');
+            document.getElementById('adminLockScreen').classList.remove('hidden');
+            window.navigateTo('home');
+        };
+
+        window.openChangePinModal = function() {
+            document.getElementById('changePinModal').classList.remove('hidden');
+            document.getElementById('changePinModal').classList.add('flex');
+        };
+
+        window.closeChangePinModal = function() {
+            document.getElementById('changePinModal').classList.add('hidden');
+            document.getElementById('changePinModal').classList.remove('flex');
+        };
+
+        window.saveNewAdminPin = async function(event) {
+            event.preventDefault();
+            const newPin = document.getElementById('newPinInput').value.trim();
+            if (newPin.length < 4 || !currentUser) return;
+            try {
+                await setDoc(settingsDocRef, { pin: newPin, updatedAt: Date.now() }, { merge: true });
+                ownerPin = newPin;
+                document.getElementById('newPinInput').value = '';
+                window.closeChangePinModal();
+                window.showToast("تم تحديث رمز دخول المالك في السحابة بنجاح");
+            } catch (e) {
+                console.error("Failed to save PIN:", e);
+                window.showToast("تعذر حفظ الرمز الجديد", true);
+            }
+        };
+
+        window.setInboxFilter = function(filter) {
+            currentFilter = filter;
+            document.querySelectorAll('.inbox-filter-btn').forEach(btn => {
+                if (btn.dataset.filter === filter) {
+                    btn.className = 'inbox-filter-btn px-4 py-3 rounded-2xl text-xs font-extrabold bg-emerald-500 text-slate-950 cursor-pointer whitespace-nowrap';
+                } else {
+                    btn.className = 'inbox-filter-btn px-4 py-3 rounded-2xl text-xs font-extrabold glass-panel border border-slate-200 dark:border-white/10 cursor-pointer whitespace-nowrap';
+                }
+            });
+            window.renderInboxMessages();
+        };
+
+        window.updateMessageStatus = async function(id, status) {
+            if (!currentUser || !isAdminUnlocked) return;
+            try {
+                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'inquiries', id), { status });
+                window.showToast("تم تحديث حالة الرسالة");
+            } catch (e) {
+                console.error("Status update error:", e);
+            }
+        };
+
+        window.deleteMessageItem = async function(id) {
+            if (!currentUser || !isAdminUnlocked) return;
+            try {
+                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'inquiries', id));
+                window.showToast("تم حذف الرسالة نهائياً");
+            } catch (e) {
+                console.error("Delete error:", e);
+            }
+        };
+
+        window.renderInboxMessages = function() {
+            const container = document.getElementById('inboxMessagesContainer');
+            if (!container) return;
+
+            const totalEl = document.getElementById('statTotalCount');
+            const newEl = document.getElementById('statNewCount');
+            const repliedEl = document.getElementById('statRepliedCount');
+
+            if (totalEl) totalEl.textContent = messagesList.length;
+            if (newEl) newEl.textContent = messagesList.filter(m => (m.status || 'new') === 'new').length;
+            if (repliedEl) repliedEl.textContent = messagesList.filter(m => m.status === 'replied').length;
+
+            const queryStr = (document.getElementById('inboxSearchInput')?.value || '').toLowerCase();
+            const filtered = messagesList.filter(item => {
+                const st = item.status || 'new';
+                const matchesStatus = currentFilter === 'all' || st === currentFilter;
+                const haystack = `${item.name} ${item.email} ${item.phone} ${item.notes} ${(item.services || []).join(' ')}`.toLowerCase();
+                return matchesStatus && haystack.includes(queryStr);
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="rounded-3xl glass-panel p-12 text-center border border-slate-200 dark:border-white/10">
+                        <i class="fa-regular fa-folder-open text-4xl text-slate-400 mb-3"></i>
+                        <p class="font-bold text-slate-500">لا توجد رسائل مطابقة حالياً في قاعدة البيانات.</p>
+                    </div>`;
+                return;
+            }
+
+            const statusBadgeMap = {
+                new: { label: 'جديدة', cls: 'bg-emerald-500/15 text-emerald-500 border-emerald-500/30' },
+                reviewing: { label: 'قيد المراجعة', cls: 'bg-amber-500/15 text-amber-400 border-amber-500/30' },
+                replied: { label: 'تم التواصل', cls: 'bg-violet-500/15 text-violet-400 border-violet-500/30' }
+            };
+
+            container.innerHTML = filtered.map(msg => {
+                const st = statusBadgeMap[msg.status || 'new'] || statusBadgeMap.new;
+                const dateFormatted = msg.createdAt ? new Date(msg.createdAt).toLocaleString('ar-EG', { dateStyle: 'medium', timeStyle: 'short' }) : '';
+                const servicesBadges = (msg.services || []).map(s => `<span class="px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-500 text-[11px] font-bold">${s}</span>`).join('');
+                const cleanPhone = (msg.phone || '').replace(/[^0-9]/g, '');
+
+                return `
+                <div class="rounded-3xl glass-panel p-6 border border-slate-200 dark:border-white/10 transition-all hover:border-emerald-500/40">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-200/70 dark:border-white/10">
+                        <div class="flex items-center gap-3">
+                            <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-500 to-violet-600 text-white font-black flex items-center justify-center text-base">
+                                ${(msg.name || '?').charAt(0).toUpperCase()}
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <h3 class="font-black text-base">${msg.name || 'عميل'}</h3>
+                                    <span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold border ${st.cls}">${st.label}</span>
+                                </div>
+                                <div class="text-xs text-slate-400 mt-0.5 flex flex-wrap items-center gap-3">
+                                    <span dir="ltr"><i class="fa-solid fa-phone text-emerald-500 me-1"></i>${msg.phone || '-'}</span>
+                                    ${msg.email ? `<span dir="ltr"><i class="fa-solid fa-envelope text-violet-400 me-1"></i>${msg.email}</span>` : ''}
+                                    <span><i class="fa-regular fa-clock me-1"></i>${dateFormatted}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap items-center gap-2">
+                            ${cleanPhone ? `<a href="https://wa.me/${cleanPhone}" target="_blank" rel="noopener" class="px-3 py-2 rounded-xl bg-emerald-500/15 text-emerald-500 hover:bg-emerald-500 hover:text-slate-950 text-xs font-extrabold transition-all"><i class="fa-brands fa-whatsapp me-1"></i>واتساب</a>` : ''}
+                            <select onchange="updateMessageStatus('${msg.id}', this.value)" class="px-3 py-2 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-bold focus:outline-none">
+                                <option value="new" ${(msg.status || 'new') === 'new' ? 'selected' : ''}>جديدة</option>
+                                <option value="reviewing" ${msg.status === 'reviewing' ? 'selected' : ''}>قيد المراجعة</option>
+                                <option value="replied" ${msg.status === 'replied' ? 'selected' : ''}>تم التواصل</option>
+                            </select>
+                            <button type="button" onclick="deleteMessageItem('${msg.id}')" class="w-9 h-9 rounded-xl bg-rose-500/10 text-rose-400 hover:bg-rose-500 hover:text-white flex items-center justify-center transition-all cursor-pointer" title="حذف الرسالة">
+                                <i class="fa-solid fa-trash-can text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    ${servicesBadges ? `<div class="flex flex-wrap gap-1.5 mt-4">${servicesBadges}</div>` : ''}
+                    ${msg.notes ? `<p class="mt-3 text-sm text-slate-600 dark:text-slate-300 bg-slate-100/70 dark:bg-white/5 p-4 rounded-2xl leading-relaxed">${msg.notes}</p>` : ''}
+                </div>`;
+            }).join('');
+        };
+
+        // Initialize Auth on page load
+        initFirebaseAuth();
+    </script>
+</body>
+</html>
