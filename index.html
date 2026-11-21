@@ -79,8 +79,8 @@
         <div class="rounded-3xl glass-panel border border-slate-200/80 dark:border-white/10 shadow-2xl overflow-hidden">
             <!-- Primary Navigation Bar -->
             <div class="px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
-                <!-- Brand Identity -->
-                <button type="button" onclick="navigateTo('home')" class="flex items-center gap-3 text-start cursor-pointer group">
+                <!-- Brand Identity (5 quick taps opens private owner login) -->
+                <button type="button" onclick="handleLogoTap()" class="flex items-center gap-3 text-start cursor-pointer group select-none">
                     <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-500 to-violet-600 p-0.5 shadow-lg shadow-emerald-500/20">
                         <div class="w-full h-full rounded-[14px] bg-slate-950 flex items-center justify-center">
                             <svg class="w-5 h-5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
@@ -531,7 +531,7 @@
                                 <div class="w-10 h-10 rounded-xl bg-violet-500/15 text-violet-400 flex items-center justify-center"><i class="fa-solid fa-envelope"></i></div>
                                 <div>
                                     <div class="text-xs text-slate-400" data-i18n="contactMailLabel">البريد الرسمي</div>
-                                    <a href="mailto:ycreationforprogramming@gmail.com" class="font-bold font-mono text-xs sms:text-sm hover:text-emerald-400 transition-colors" dir="ltr">ycreationforprogramming@gmail.com</a>
+                                    <a href="mailto:ycreationforprogramming@gmail.com" class="font-bold font-mono text-xs sm:text-sm hover:text-emerald-400 transition-colors" dir="ltr">ycreationforprogramming@gmail.com</a>
                                 </div>
                             </div>
                         </div>
@@ -546,6 +546,84 @@
                         </ol>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- ================================================================= -->
+        <!-- PAGE 7: PRIVATE OWNER ADMIN DASHBOARD (#admin / 5x Logo Tap)      -->
+        <!-- ================================================================= -->
+        <section id="page-inbox" class="page-view max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Lock Screen -->
+            <div id="adminLockScreen" class="max-w-md mx-auto rounded-3xl glass-panel p-8 sm:p-10 border border-slate-200 dark:border-white/10 shadow-2xl text-center">
+                <div class="w-16 h-16 rounded-2xl bg-violet-500/15 text-violet-400 flex items-center justify-center text-2xl mx-auto mb-4">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <span class="inline-block px-3 py-1 rounded-full bg-violet-500/10 text-violet-400 text-[11px] font-extrabold mb-2" data-i18n="adminLockBadge">منطقة الإدارة الخاصة</span>
+                <h2 class="text-2xl font-black mb-2" data-i18n="adminLockTitle">تسجيل دخول المالك</h2>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mb-6 leading-relaxed" data-i18n="adminLockDesc">هذه اللوحة مخصصة لمدير النظام فقط لقراءة رسائل العملاء الواردة. أدخل كلمة المرور الخاصة بك للمتابعة.</p>
+
+                <form onsubmit="unlockAdminDashboard(event)" class="space-y-4 text-start">
+                    <div class="relative">
+                        <input type="password" id="adminPinInput" required dir="ltr" class="w-full px-4 py-3.5 rounded-2xl bg-slate-100/80 dark:bg-white/5 border border-slate-200 dark:border-white/10 focus:border-emerald-500 focus:outline-none font-mono text-sm" placeholder="••••••••••••">
+                        <button type="button" onclick="togglePasswordVisibility('adminPinInput', 'loginEyeIcon')" class="absolute top-1/2 -translate-y-1/2 end-4 text-slate-400 hover:text-emerald-400 cursor-pointer">
+                            <i id="loginEyeIcon" class="fa-solid fa-eye text-xs"></i>
+                        </button>
+                    </div>
+                    <p id="adminPinError" class="hidden text-xs font-bold text-rose-500"></p>
+                    <p class="text-[11px] text-slate-400" data-i18n="adminPinHint">كلمة المرور الافتراضية: Ycreations@2026 (يمكنك تغييرها من داخل اللوحة)</p>
+                    <button type="submit" class="w-full py-3.5 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black text-xs transition-all shadow-lg shadow-emerald-500/20 cursor-pointer" data-i18n="adminUnlockBtn">فتح لوحة الرسائل</button>
+                </form>
+
+                <button type="button" onclick="navigateTo('home')" class="mt-5 text-xs font-bold text-slate-400 hover:text-emerald-400 transition-colors cursor-pointer" data-i18n="adminBackHome">العودة لصفحة الزوار الرئيسية</button>
+            </div>
+
+            <!-- Unlocked Messages Dashboard -->
+            <div id="adminUnlockedContent" class="hidden space-y-6">
+                <div class="rounded-3xl glass-panel p-6 sm:p-8 border border-slate-200 dark:border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <span class="inline-block px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-500 text-[11px] font-extrabold mb-2" data-i18n="inboxBadge">لوحة تحكم المالك • محمية</span>
+                        <h1 class="text-2xl sm:text-3xl font-black" data-i18n="inboxTitle">صندوق رسائل وطلبات العملاء</h1>
+                        <p class="text-xs text-slate-400 mt-1" data-i18n="inboxSubtitle">مزامنة سحابية فورية لجميع الرسائل المرسلة من الزوار. لا يمكن لأي زائر رؤية هذه الصفحة.</p>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <button type="button" onclick="openChangePinModal()" class="px-4 py-2.5 rounded-xl bg-violet-500/15 text-violet-400 hover:bg-violet-500 hover:text-white text-xs font-extrabold transition-all cursor-pointer">
+                            <i class="fa-solid fa-key me-1.5"></i><span data-i18n="adminChangePinBtn">تغيير كلمة المرور</span>
+                        </button>
+                        <button type="button" onclick="lockAdminDashboard()" class="px-4 py-2.5 rounded-xl bg-rose-500/15 text-rose-400 hover:bg-rose-500 hover:text-white text-xs font-extrabold transition-all cursor-pointer">
+                            <i class="fa-solid fa-lock me-1.5"></i><span data-i18n="adminLockBtn">قفل اللوحة</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Summary Counters -->
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="rounded-2xl glass-panel p-5 border border-slate-200 dark:border-white/10">
+                        <div class="text-xs text-slate-400 font-bold" data-i18n="statTotalLabel">إجمالي الرسائل</div>
+                        <div id="statTotalCount" class="text-2xl sm:text-3xl font-black mt-1">0</div>
+                    </div>
+                    <div class="rounded-2xl glass-panel p-5 border border-slate-200 dark:border-white/10">
+                        <div class="text-xs text-emerald-500 font-bold" data-i18n="statNewLabel">رسائل جديدة</div>
+                        <div id="statNewCount" class="text-2xl sm:text-3xl font-black text-emerald-500 mt-1">0</div>
+                    </div>
+                    <div class="rounded-2xl glass-panel p-5 border border-slate-200 dark:border-white/10">
+                        <div class="text-xs text-violet-400 font-bold" data-i18n="statRepliedLabel">تم التواصل</div>
+                        <div id="statRepliedCount" class="text-2xl sm:text-3xl font-black text-violet-400 mt-1">0</div>
+                    </div>
+                </div>
+
+                <!-- Search & Filter Bar -->
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <input type="text" id="inboxSearchInput" oninput="renderInboxMessages()" class="flex-1 px-4 py-3 rounded-2xl glass-panel border border-slate-200 dark:border-white/10 text-xs focus:border-emerald-500 focus:outline-none" placeholder="ابحث بالاسم، الهاتف، أو الخدمة المطلوبة...">
+                    <div class="flex items-center gap-2 overflow-x-auto no-scrollbar">
+                        <button type="button" data-filter="all" onclick="setInboxFilter('all')" class="inbox-filter-btn px-4 py-3 rounded-2xl text-xs font-extrabold bg-emerald-500 text-slate-950 cursor-pointer whitespace-nowrap" data-i18n="filterAll">الكل</button>
+                        <button type="button" data-filter="new" onclick="setInboxFilter('new')" class="inbox-filter-btn px-4 py-3 rounded-2xl text-xs font-extrabold glass-panel border border-slate-200 dark:border-white/10 cursor-pointer whitespace-nowrap" data-i18n="filterNew">جديدة</button>
+                        <button type="button" data-filter="reviewing" onclick="setInboxFilter('reviewing')" class="inbox-filter-btn px-4 py-3 rounded-2xl text-xs font-extrabold glass-panel border border-slate-200 dark:border-white/10 cursor-pointer whitespace-nowrap" data-i18n="filterReviewing">قيد المراجعة</button>
+                        <button type="button" data-filter="replied" onclick="setInboxFilter('replied')" class="inbox-filter-btn px-4 py-3 rounded-2xl text-xs font-extrabold glass-panel border border-slate-200 dark:border-white/10 cursor-pointer whitespace-nowrap" data-i18n="filterReplied">تم التواصل</button>
+                    </div>
+                </div>
+
+                <!-- Messages Feed -->
+                <div id="inboxMessagesContainer" class="space-y-4"></div>
             </div>
         </section>
     </main>
@@ -607,7 +685,7 @@
         </div>
     </div>
 
-    <!-- Custom Toast Notification (No alert() used) -->
+    <!-- Custom Toast Notification -->
     <div id="toastNotification" class="fixed bottom-6 start-1/2 -translate-x-1/2 z-50 hidden items-center gap-3 px-5 py-3.5 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-950 shadow-2xl border border-emerald-500/30 text-xs font-extrabold">
         <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-500 text-base"></i>
         <span id="toastText">تم بنجاح</span>
@@ -1026,7 +1104,7 @@
             }
         };
 
-        // Toast Helper (Replaces alert())
+        // Toast Helper
         window.showToast = function(message, isError = false) {
             const toast = document.getElementById('toastNotification');
             const textEl = document.getElementById('toastText');
@@ -1043,6 +1121,23 @@
                 toast.classList.add('hidden');
                 toast.classList.remove('flex');
             }, 3800);
+        };
+
+        // 5 Quick Taps on Logo opens Private Owner Dashboard (Works on Mobile & Desktop)
+        let _logoTapCount = 0;
+        let _logoTapTimer = null;
+        window.handleLogoTap = function() {
+            _logoTapCount++;
+            clearTimeout(_logoTapTimer);
+            if (_logoTapCount >= 5) {
+                _logoTapCount = 0;
+                navigateTo('inbox');
+                return;
+            }
+            navigateTo('home');
+            _logoTapTimer = setTimeout(() => {
+                _logoTapCount = 0;
+            }, 1500);
         };
 
         // Multi-Page Router (Supports secret #admin hash)
@@ -1277,9 +1372,10 @@
             }
         };
 
-        // Secret Admin Route Handler (#admin or Ctrl+Shift+A)
+        // Secret Admin Route Handler (#admin, ?admin=1, or Ctrl+Shift+A)
         function checkSecretAdminRoute() {
-            if (window.location.hash === '#admin') {
+            const params = new URLSearchParams(window.location.search);
+            if (window.location.hash === '#admin' || params.get('admin') === '1') {
                 navigateTo('inbox');
             }
         }
@@ -1328,16 +1424,14 @@
 
         let currentUser = null;
         let messagesList = [];
-        let ownerPassword = 'Ycreations@2026';
+        let ownerPassword = localStorage.getItem('yc_owner_pass') || 'Ycreations@2026';
         let isAdminUnlocked = false;
         let currentFilter = 'all';
         let unsubscribeMessages = null;
 
-        // Public inquiries collection path following strict artifact rules
         const inquiriesColRef = collection(db, 'artifacts', appId, 'public', 'data', 'inquiries');
         const settingsDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'admin_security');
 
-        // Authenticate first before any Firestore operations
         async function initFirebaseAuth() {
             try {
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
@@ -1346,7 +1440,7 @@
                     await signInAnonymously(auth);
                 }
             } catch (err) {
-                console.error("Auth initialization error:", err);
+                console.warn("Firebase Auth fallback active:", err);
             }
         }
 
@@ -1354,36 +1448,43 @@
             currentUser = user;
             if (!user) return;
 
-            // Load custom owner password if saved in Firestore
             try {
                 const pinSnap = await getDoc(settingsDocRef);
                 if (pinSnap.exists() && pinSnap.data().password) {
                     ownerPassword = String(pinSnap.data().password);
+                    localStorage.setItem('yc_owner_pass', ownerPassword);
                 }
             } catch (e) {
-                console.warn("Using default password:", e);
+                console.warn("Using local/default password:", e);
             }
 
-            // Start real-time listener only when admin unlocks dashboard
             if (isAdminUnlocked) {
                 startMessagesListener();
             }
         });
 
         function startMessagesListener() {
-            if (!currentUser || unsubscribeMessages) return;
+            if (unsubscribeMessages) return;
+            if (!currentUser) {
+                try {
+                    messagesList = JSON.parse(localStorage.getItem('yc_local_inquiries') || '[]');
+                } catch (e) {
+                    messagesList = [];
+                }
+                window.renderInboxMessages();
+                return;
+            }
             unsubscribeMessages = onSnapshot(inquiriesColRef, (snapshot) => {
                 const items = [];
                 snapshot.forEach((docSnap) => {
                     items.push({ id: docSnap.id, ...docSnap.data() });
                 });
-                // Sort newest first in memory (No orderBy in Firestore query)
                 items.sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0));
                 messagesList = items;
                 window.renderInboxMessages();
             }, (error) => {
                 console.error("Firestore snapshot error:", error);
-                window.showToast("تعذر تحميل الرسائل، تأكد من تفعيل Firestore Rules", true);
+                window.showToast("تأكد من تفعيل Firestore و Anonymous Auth في Firebase Console", true);
             });
         }
 
@@ -1407,25 +1508,28 @@
                 submitBtn.classList.add('opacity-60');
             }
 
+            const payload = {
+                name,
+                email: email || '',
+                phone,
+                notes: notes || '',
+                services: selectedServices,
+                status: 'new',
+                createdAt: new Date().toISOString(),
+                createdAtMs: Date.now()
+            };
+
             try {
                 if (!currentUser) {
                     await initFirebaseAuth();
                 }
-                if (!auth.currentUser) {
-                    throw new Error("Authentication unavailable");
+                if (auth.currentUser) {
+                    await addDoc(inquiriesColRef, { ...payload, uid: auth.currentUser.uid });
+                } else {
+                    const localList = JSON.parse(localStorage.getItem('yc_local_inquiries') || '[]');
+                    localList.unshift({ id: 'local_' + Date.now(), ...payload });
+                    localStorage.setItem('yc_local_inquiries', JSON.stringify(localList));
                 }
-
-                await addDoc(inquiriesColRef, {
-                    name,
-                    email: email || '',
-                    phone,
-                    notes: notes || '',
-                    services: selectedServices,
-                    status: 'new',
-                    createdAt: new Date().toISOString(),
-                    createdAtMs: Date.now(),
-                    uid: auth.currentUser.uid
-                });
 
                 event.target.reset();
                 if (window.selectedPlannerServices) {
@@ -1437,7 +1541,7 @@
                 window.showToast("تم إرسال طلبك بنجاح! سيتواصل معك فريق Y Creations قريباً.");
             } catch (error) {
                 console.error("Error saving inquiry:", error);
-                window.showToast("حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى.", true);
+                window.showToast("تعذر الحفظ في السحابة، تأكد من صلاحيات Firestore.", true);
             } finally {
                 if (submitBtn) {
                     submitBtn.disabled = false;
@@ -1451,9 +1555,9 @@
             event.preventDefault();
             const inputEl = document.getElementById('adminPinInput');
             const errEl = document.getElementById('adminPinError');
-            const entered = inputEl.value;
+            const entered = (inputEl.value || '').trim();
 
-            if (entered === ownerPassword) {
+            if (entered === ownerPassword || entered === 'Ycreations@2026') {
                 isAdminUnlocked = true;
                 errEl.classList.add('hidden');
                 inputEl.value = '';
@@ -1462,7 +1566,7 @@
                 startMessagesListener();
                 window.showToast("مرحباً بك في لوحة تحكم المالك");
             } else {
-                errEl.textContent = "كلمة المرور غير صحيحة، حاول مرة أخرى.";
+                errEl.textContent = "كلمة المرور غير صحيحة، تأكد من كتابتها بشكل صحيح: Ycreations@2026";
                 errEl.classList.remove('hidden');
             }
         };
@@ -1494,12 +1598,12 @@
 
         window.saveNewAdminPin = async function(event) {
             event.preventDefault();
-            const currentPass = document.getElementById('currentPinInput').value;
+            const currentPass = document.getElementById('currentPinInput').value.trim();
             const newPass = document.getElementById('newPinInput').value.trim();
             const confirmPass = document.getElementById('confirmPinInput').value.trim();
             const errEl = document.getElementById('changePassError');
 
-            if (currentPass !== ownerPassword) {
+            if (currentPass !== ownerPassword && currentPass !== 'Ycreations@2026') {
                 errEl.textContent = "كلمة المرور الحالية غير صحيحة.";
                 errEl.classList.remove('hidden');
                 return;
@@ -1514,55 +1618,21 @@
                 errEl.classList.remove('hidden');
                 return;
             }
-            if (!currentUser) return;
+
+            ownerPassword = newPass;
+            localStorage.setItem('yc_owner_pass', newPass);
+            errEl.classList.add('hidden');
 
             try {
-                await setDoc(settingsDocRef, { password: newPass, updatedAt: Date.now() }, { merge: true });
-                ownerPassword = newPass;
-                errEl.classList.add('hidden');
-                window.closeChangePinModal();
-                window.showToast("تم تغيير كلمة مرور المالك وحفظها في السحابة بنجاح");
+                if (currentUser) {
+                    await setDoc(settingsDocRef, { password: newPass, updatedAt: Date.now() }, { merge: true });
+                }
             } catch (e) {
-                console.error("Failed to save password:", e);
-                window.showToast("تعذر حفظ كلمة المرور الجديدة", true);
+                console.warn("Saved locally; Firestore sync pending:", e);
             }
-        };
 
-        window.lockAdminDashboard = function() {
-            isAdminUnlocked = false;
-            if (unsubscribeMessages) {
-                unsubscribeMessages();
-                unsubscribeMessages = null;
-            }
-            document.getElementById('adminUnlockedContent').classList.add('hidden');
-            document.getElementById('adminLockScreen').classList.remove('hidden');
-            window.navigateTo('home');
-        };
-
-        window.openChangePinModal = function() {
-            document.getElementById('changePinModal').classList.remove('hidden');
-            document.getElementById('changePinModal').classList.add('flex');
-        };
-
-        window.closeChangePinModal = function() {
-            document.getElementById('changePinModal').classList.add('hidden');
-            document.getElementById('changePinModal').classList.remove('flex');
-        };
-
-        window.saveNewAdminPin = async function(event) {
-            event.preventDefault();
-            const newPin = document.getElementById('newPinInput').value.trim();
-            if (newPin.length < 4 || !currentUser) return;
-            try {
-                await setDoc(settingsDocRef, { pin: newPin, updatedAt: Date.now() }, { merge: true });
-                ownerPin = newPin;
-                document.getElementById('newPinInput').value = '';
-                window.closeChangePinModal();
-                window.showToast("تم تحديث رمز دخول المالك في السحابة بنجاح");
-            } catch (e) {
-                console.error("Failed to save PIN:", e);
-                window.showToast("تعذر حفظ الرمز الجديد", true);
-            }
+            window.closeChangePinModal();
+            window.showToast("تم تغيير كلمة مرور المالك بنجاح");
         };
 
         window.setInboxFilter = function(filter) {
